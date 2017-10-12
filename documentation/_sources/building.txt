@@ -47,8 +47,9 @@ The Kakadu source code archive ``v7_9-01727L.zip`` must be placed in the
 Sipi's build process requires CMake_, a C++ compiler that supports the C++11
 standard (such as GCC_ or clang_), and several libraries that are readily
 available on supported platforms. The test framework requires `Python 3`_,
-nginx_, and a recent version of ImageMagick_. Instructions for installing
-these prerequisites are given below.
+(version 3.5 or later), `Apache ab`_ (which is assumed to be installed by default
+on macOS Sierra), nginx_, and a recent version of ImageMagick_. Instructions
+for installing these prerequisites are given below.
 
 The build process downloads and builds Sipi's other prerequisites.
 
@@ -104,6 +105,7 @@ Prerequisites for building Sipi without its automated test framework:
     sudo apt-get install libreadline-dev
     sudo apt-get install gettext
     sudo apt-get install libmagic-dev
+    sudo apt-get install unzip
 
 If you also want to run Sipi's tests, you will need ImageMagick_, version 7.0.6
 or higher. We suggest compiling it from source:
@@ -123,6 +125,7 @@ Then:
 
 ::
 
+    sudo apt-get install ab
     sudo apt-get install nginx
     sudo chown -R $USER /var/log/nginx
     sudo apt-get install python3
@@ -190,6 +193,7 @@ Then:
 
 ::
 
+    sudo yum -y install httpd-tools
     sudo yum -y install nginx
     sudo chown -R $USER /var/log/nginx
     sudo chown -R $USER /var/lib/nginx
@@ -221,6 +225,14 @@ Then compile Sipi:
     cmake ..
     make
 
+By default, Sipi is built without optimization and with debug information output.
+To compile Sipi with optimization level 3, run:
+
+::
+
+     cmake .. -DMAKE_DEBUG:BOOL=OFF
+     make
+
 
 *************
 Running Tests
@@ -230,7 +242,8 @@ You can run the automated tests in the ``build`` directory like this:
 
 ::
 
-    make check
+    make test // will run all tests
+    make check // will run only e2e tests
 
 
 *******************************************
@@ -281,7 +294,7 @@ the top level of the source tree and type:
 
 ::
 
-    rm -rf build/* lib local extsrcs
+    rm -rf build/* lib local extsrcs include/*_icc.h
 
 
 .. _Kakadu: http://kakadusoftware.com/
@@ -295,4 +308,5 @@ the top level of the source tree and type:
 .. _`Code::Blocks`: http://www.codeblocks.org/
 .. _LaTeX: https://www.latex-project.org/
 .. _devtoolset-4: https://www.softwarecollections.org/en/scls/rhscl/devtoolset-4/
+.. _Apache ab: https://httpd.apache.org/docs/2.4/programs/ab.html
 .. _ImageMagick: http://www.imagemagick.org/

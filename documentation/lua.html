@@ -119,7 +119,7 @@
 for IIIF image requests, and to write custom routes.</p>
 <p>Sipi provides the Lua interpreter the <a class="reference external" href="https://luarocks.org/">LuaRocks</a> package manager. Sipi does not
 use the system&#8217;s Lua interpreter or package manager.</p>
-<p>The Lua interepreter in Sipi runs in a multithreaded environment: each
+<p>The Lua interpreter in Sipi runs in a multithreaded environment: each
 request runs in its own thread and has its own Lua interpreter. Therefore,
 only Lua packages that are known to be thread-safe may be used.</p>
 <div class="section" id="custom-routes">
@@ -184,7 +184,7 @@ scripts <code class="docutils literal"><span class="pre">upload.elua``and</span>
 <h2><a class="toc-backref" href="#id4">Sipi Functions Available to Lua Scripts</a><a class="headerlink" href="#sipi-functions-available-to-lua-scripts" title="Permalink to this headline">¶</a></h2>
 <p>Sipi provides the following functions that can be called from Lua scripts.
 Each function returns two values. The first value is <code class="docutils literal"><span class="pre">true</span></code> if the operation
-succeeded, <code class="docutils literal"><span class="pre">false</span></code> otherwise. If the operation suceeded, the second value
+succeeded, <code class="docutils literal"><span class="pre">false</span></code> otherwise. If the operation succeeded, the second value
 is the result of the operation, otherwise it is an error message.</p>
 <div class="section" id="server-setbuffer">
 <h3><a class="toc-backref" href="#id5">server.setBuffer</a><a class="headerlink" href="#server-setbuffer" title="Permalink to this headline">¶</a></h3>
@@ -443,7 +443,7 @@ The audience value is a string, typically the base address of the resource being
 <div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">table</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">requireAuth</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>Gets HTTP authentification data. Returns <code class="docutils literal"><span class="pre">true,</span> <span class="pre">table</span></code> on success or
+<p>Gets HTTP authentication data. Returns <code class="docutils literal"><span class="pre">true,</span> <span class="pre">table</span></code> on success or
 <code class="docutils literal"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure. The result is a table:</p>
 <div class="highlight-lua"><div class="highlight"><pre><span></span><span class="p">{</span>
     <span class="n">status</span> <span class="o">=</span> <span class="n">string</span> <span class="c1">-- &quot;BASIC&quot; | &quot;BEARER&quot; | &quot;NOAUTH&quot; (no authorization header) | &quot;ERROR&quot;</span>
@@ -458,7 +458,7 @@ The audience value is a string, typically the base address of the resource being
 <div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">auth</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">requireAuth</span><span class="p">()</span>
 <span class="k">if</span> <span class="ow">not</span> <span class="n">success</span> <span class="k">then</span>
     <span class="n">server</span><span class="p">.</span><span class="n">sendStatus</span><span class="p">(</span><span class="mi">501</span><span class="p">)</span>
-    <span class="n">server</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">Error in getting authentification scheme!&quot;</span><span class="p">)</span>
+    <span class="n">server</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">Error in getting authentication scheme!&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
 <span class="k">end</span>
 
@@ -591,7 +591,7 @@ failure.</p>
 </pre></div>
 </div>
 <p>if <code class="docutils literal"><span class="pre">subdir_levels``(see</span> <span class="pre">configuration</span> <span class="pre">file)</span> <span class="pre">is</span> <span class="pre">&gt;</span> <span class="pre">0,</span> <span class="pre">recursive</span> <span class="pre">subdirectories</span> <span class="pre">named</span>
-<span class="pre">'A',</span> <span class="pre">'B',..,</span> <span class="pre">'Z'</span> <span class="pre">are</span> <span class="pre">used</span> <span class="pre">to</span> <span class="pre">split</span> <span class="pre">the</span> <span class="pre">image</span> <span class="pre">files</span> <span class="pre">accross</span> <span class="pre">multiple</span> <span class="pre">directories.</span> <span class="pre">A</span> <span class="pre">simple</span>
+<span class="pre">'A',</span> <span class="pre">'B',..,</span> <span class="pre">'Z'</span> <span class="pre">are</span> <span class="pre">used</span> <span class="pre">to</span> <span class="pre">split</span> <span class="pre">the</span> <span class="pre">image</span> <span class="pre">files</span> <span class="pre">across</span> <span class="pre">multiple</span> <span class="pre">directories.</span> <span class="pre">A</span> <span class="pre">simple</span>
 <span class="pre">hash-algorithm</span> <span class="pre">is</span> <span class="pre">being</span> <span class="pre">used.</span> <span class="pre">This</span> <span class="pre">function</span> <span class="pre">returns</span> <span class="pre">a</span> <span class="pre">filepath</span> <span class="pre">with</span> <span class="pre">the</span> <span class="pre">subdirectories</span>
 <span class="pre">prepended,</span> <span class="pre">e.g</span> <span class="pre">`gaga.jp2</span></code> becomes <code class="docutils literal"><span class="pre">C/W/gaga.jpg</span></code></p>
 <p>Example:</p>
@@ -628,7 +628,7 @@ failure.</p>
 </div>
 <p>This creates a new Lua image object and loads the given image into. The second form
 allows to indicate a region, the size or a reduce factor and the original filename.
-Th <code class="docutils literal"><span class="pre">hash</span></code> parameter indicates that the given checksum should be calcukated out of the
+The <code class="docutils literal"><span class="pre">hash</span></code> parameter indicates that the given checksum should be calculated out of the
 pixel values and written into the header.</p>
 </div>
 <div class="section" id="sipiimage-dims">
@@ -742,7 +742,7 @@ all resources when they are no longer used.</p>
 <div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">qry</span> <span class="o">=</span> <span class="n">db</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="s">SELECT * FROM image&#39;</span>
 </pre></div>
 </div>
-<p>Or, if you want to use a prepared query statment:</p>
+<p>Or, if you want to use a prepared query statement:</p>
 <div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">qry</span> <span class="o">=</span> <span class="n">db</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="s">INSERT INTO image (id, description) VALUES (?,?)&#39;</span>
 </pre></div>
 </div>
@@ -762,7 +762,7 @@ query object is not needed anymore, it may be destroyed:</p>
 <span class="k">end</span>
 </pre></div>
 </div>
-<p>Or with a prepared statment:</p>
+<p>Or with a prepared statement:</p>
 <div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">qry</span><span class="p">(</span><span class="s1">&#39;</span><span class="s">SGV_1960_00315&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="s">This is an image of a steam engine...&#39;</span><span class="p">)</span>
 </pre></div>
 </div>

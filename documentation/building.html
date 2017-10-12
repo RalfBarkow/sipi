@@ -80,8 +80,9 @@ The Kakadu source code archive <code class="docutils literal"><span class="pre">
 <p>Sipi&#8217;s build process requires <a class="reference external" href="https://cmake.org/">CMake</a>, a C++ compiler that supports the C++11
 standard (such as <a class="reference external" href="https://gcc.gnu.org">GCC</a> or <a class="reference external" href="https://clang.llvm.org/">clang</a>), and several libraries that are readily
 available on supported platforms. The test framework requires <a class="reference external" href="https://www.python.org/">Python 3</a>,
-<a class="reference external" href="https://nginx.org/en/">nginx</a>, and a recent version of <a class="reference external" href="http://www.imagemagick.org/">ImageMagick</a>. Instructions for installing
-these prerequisites are given below.</p>
+(version 3.5 or later), <a class="reference external" href="https://httpd.apache.org/docs/2.4/programs/ab.html">Apache ab</a> (which is assumed to be installed by default
+on macOS Sierra), <a class="reference external" href="https://nginx.org/en/">nginx</a>, and a recent version of <a class="reference external" href="http://www.imagemagick.org/">ImageMagick</a>. Instructions
+for installing these prerequisites are given below.</p>
 <p>The build process downloads and builds Sipi&#8217;s other prerequisites.</p>
 <p>Sipi uses the Adobe ICC Color profiles, which are automatically
 downloaded by the build process into the file <code class="docutils literal"><span class="pre">icc.zip</span></code>. The user
@@ -122,6 +123,7 @@ sudo apt-get install doxygen
 sudo apt-get install libreadline-dev
 sudo apt-get install gettext
 sudo apt-get install libmagic-dev
+sudo apt-get install unzip
 </pre></div>
 </div>
 <p>If you also want to run Sipi&#8217;s tests, you will need <a class="reference external" href="http://www.imagemagick.org/">ImageMagick</a>, version 7.0.6
@@ -137,7 +139,8 @@ sudo ldconfig /usr/local/lib
 </pre></div>
 </div>
 <p>Then:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>sudo apt-get install nginx
+<div class="highlight-none"><div class="highlight"><pre><span></span>sudo apt-get install ab
+sudo apt-get install nginx
 sudo chown -R $USER /var/log/nginx
 sudo apt-get install python3
 sudo apt-get install python3-pip
@@ -191,7 +194,8 @@ sudo ldconfig /usr/local/lib
 </pre></div>
 </div>
 <p>Then:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>sudo yum -y install nginx
+<div class="highlight-none"><div class="highlight"><pre><span></span>sudo yum -y install httpd-tools
+sudo yum -y install nginx
 sudo chown -R $USER /var/log/nginx
 sudo chown -R $USER /var/lib/nginx
 sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
@@ -218,11 +222,18 @@ sudo pip3.5 install iiif_validator
 make
 </pre></div>
 </div>
+<p>By default, Sipi is built without optimization and with debug information output.
+To compile Sipi with optimization level 3, run:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>cmake .. -DMAKE_DEBUG:BOOL=OFF
+make
+</pre></div>
+</div>
 </div>
 <div class="section" id="running-tests">
 <h2><a class="toc-backref" href="#id7">Running Tests</a><a class="headerlink" href="#running-tests" title="Permalink to this headline">¶</a></h2>
 <p>You can run the automated tests in the <code class="docutils literal"><span class="pre">build</span></code> directory like this:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>make check
+<div class="highlight-none"><div class="highlight"><pre><span></span>make test // will run all tests
+make check // will run only e2e tests
 </pre></div>
 </div>
 </div>
@@ -256,7 +267,7 @@ to <code class="docutils literal"><span class="pre">doc/html/latex</span></code>
 <h2><a class="toc-backref" href="#id10">Starting Over</a><a class="headerlink" href="#starting-over" title="Permalink to this headline">¶</a></h2>
 <p>To delete the previous build and start over from scratch, <code class="docutils literal"><span class="pre">cd</span></code> to
 the top level of the source tree and type:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>rm -rf build/* lib local extsrcs
+<div class="highlight-none"><div class="highlight"><pre><span></span>rm -rf build/* lib local extsrcs include/*_icc.h
 </pre></div>
 </div>
 </div>

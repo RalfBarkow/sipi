@@ -59,8 +59,12 @@
 <li><a class="reference internal" href="#code-blocks" id="id3">Code::Blocks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#writing-tests" id="id4">Writing Tests</a></li>
-<li><a class="reference internal" href="#commit-message-schema" id="id5">Commit Message Schema</a></li>
+<li><a class="reference internal" href="#writing-tests" id="id4">Writing Tests</a><ul>
+<li><a class="reference internal" href="#unit-tests" id="id5">Unit Tests</a></li>
+<li><a class="reference internal" href="#end-to-end-tests" id="id6">End-to-End Tests</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#commit-message-schema" id="id7">Commit Message Schema</a></li>
 </ul>
 </div>
 <div class="section" id="using-an-ide">
@@ -84,7 +88,15 @@ cmake .. -G &quot;CodeBlocks - Unix Makefiles&quot;
 </div>
 <div class="section" id="writing-tests">
 <h2><a class="toc-backref" href="#id4">Writing Tests</a><a class="headerlink" href="#writing-tests" title="Permalink to this headline">¶</a></h2>
-<p>The test framework uses <a class="reference external" href="http://doc.pytest.org/en/latest/">pytest</a>. To add tests, add a Python class in a file
+<p>We use two test frameworks. We use <a class="reference external" href="https://github.com/google/googletest">googletest</a> for unit test and <a class="reference external" href="http://doc.pytest.org/en/latest/">pytest</a> for
+end-to-end tests.</p>
+<div class="section" id="unit-tests">
+<h3><a class="toc-backref" href="#id5">Unit Tests</a><a class="headerlink" href="#unit-tests" title="Permalink to this headline">¶</a></h3>
+<p>TBA</p>
+</div>
+<div class="section" id="end-to-end-tests">
+<h3><a class="toc-backref" href="#id6">End-to-End Tests</a><a class="headerlink" href="#end-to-end-tests" title="Permalink to this headline">¶</a></h3>
+<p>To add end-to-end tests, add a Python class in a file
 whose name begins with <code class="docutils literal"><span class="pre">test</span></code>, in the <code class="docutils literal"><span class="pre">test</span></code> directory. The class&#8217;s
 methods, whose names must also begin with <code class="docutils literal"><span class="pre">test</span></code>, should use the <code class="docutils literal"><span class="pre">manager</span></code>
 fixture defined in <code class="docutils literal"><span class="pre">test/conftest.py</span></code>, which handles starting and stopping a
@@ -98,8 +110,9 @@ dummy <a class="reference external" href="http://www.knora.org/">Knora</a> API s
 returns a static JSON file that always grants permission to view the requested
 file.</p>
 </div>
+</div>
 <div class="section" id="commit-message-schema">
-<h2><a class="toc-backref" href="#id5">Commit Message Schema</a><a class="headerlink" href="#commit-message-schema" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7">Commit Message Schema</a><a class="headerlink" href="#commit-message-schema" title="Permalink to this headline">¶</a></h2>
 <p>When writing commit messages, we stick to this schema:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>type (scope): subject
 body
