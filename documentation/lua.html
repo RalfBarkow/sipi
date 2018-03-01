@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Customizing Sipi with Lua Scripts &#8212; Sipi 0.1 documentation</title>
+    <title>Customizing Sipi with Lua Scripts &#8212; Sipi v1.2.0 documentation</title>
     
     <link rel="stylesheet" href="_static/agogo.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,10 +14,11 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1',
+        VERSION:     'v1.2.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
@@ -25,7 +26,6 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="Sipi 0.1 documentation" href="index.html" />
     <link rel="next" title="Developing Sipi" href="developing.html" />
     <link rel="prev" title="Running Sipi" href="running.html" /> 
   </head>
@@ -33,7 +33,7 @@
     <div class="header-wrapper" role="banner">
       <div class="header">
         <div class="headertitle"><a
-          href="index.html">Sipi 0.1 documentation</a></div>
+          href="index.html">Sipi v1.2.0 documentation</a></div>
         <div class="rel" role="navigation" aria-label="related navigation">
           <a href="running.html" title="Running Sipi"
              accesskey="P">previous</a> |
@@ -128,14 +128,14 @@ only Lua packages that are known to be thread-safe may be used.</p>
 <code class="docutils literal"><span class="pre">routes</span></code> configuration variable. For example:</p>
 <div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">routes</span> <span class="o">=</span> <span class="p">{</span>
     <span class="p">{</span>
-        <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="s">GET&#39;</span><span class="p">,</span>
-        <span class="n">route</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="s">/status&#39;</span><span class="p">,</span>
-        <span class="n">script</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="s">get_repository_status.lua&#39;</span>
+        <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;GET&#39;</span><span class="p">,</span>
+        <span class="n">route</span> <span class="o">=</span> <span class="s1">&#39;/status&#39;</span><span class="p">,</span>
+        <span class="n">script</span> <span class="o">=</span> <span class="s1">&#39;get_repository_status.lua&#39;</span>
     <span class="p">},</span>
     <span class="p">{</span>
-        <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="s">POST&#39;</span><span class="p">,</span>
-        <span class="n">route</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="s">/make_thumbnail&#39;</span><span class="p">,</span>
-        <span class="n">script</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="s">make_image_thumbnail.lua&#39;</span>
+        <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+        <span class="n">route</span> <span class="o">=</span> <span class="s1">&#39;/make_thumbnail&#39;</span><span class="p">,</span>
+        <span class="n">script</span> <span class="o">=</span> <span class="s1">&#39;make_image_thumbnail.lua&#39;</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -153,20 +153,18 @@ whenever an image is requested.</p>
 <p>The possible return values of the <code class="docutils literal"><span class="pre">pre_flight</span></code> function are as follows.
 Note that Lua function&#8217;s return value may consist of more than one element
 (see <a class="reference external" href="http://www.lua.org/pil/5.1.html">Multiple Results</a>):</p>
-<ul>
-<li><p class="first">Grant full permissions to access the file identified by <code class="docutils literal"><span class="pre">filepath</span></code>: <code class="docutils literal"><span class="pre">return</span> <span class="pre">'allow',</span> <span class="pre">filepath</span></code></p>
-</li>
+<ul class="simple">
+<li>Grant full permissions to access the file identified by <code class="docutils literal"><span class="pre">filepath</span></code>: <code class="docutils literal"><span class="pre">return</span> <span class="pre">'allow',</span> <span class="pre">filepath</span></code></li>
 <li><dl class="first docutils">
 <dt>Grant restricted access to the file identified by <code class="docutils literal"><span class="pre">filepath</span></code>, in one of the following ways:</dt>
-<dd><ul class="first last simple">
+<dd><ul class="first last">
 <li>Reduce the image dimensions, e.g. to the default thumbnail dimensions: <code class="docutils literal"><span class="pre">return</span> <span class="pre">'restrict:size='</span> <span class="pre">..</span> <span class="pre">&quot;config.thumb_size&quot;,</span> <span class="pre">filepath</span></code></li>
 <li>Render the image with a watermark: <code class="docutils literal"><span class="pre">return</span> <span class="pre">restrict:watermark=&lt;path-to-watermark&gt;,</span> <span class="pre">filepath</span></code></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><p class="first">Deny access to the requested file: <code class="docutils literal"><span class="pre">return</span> <span class="pre">'deny'</span></code></p>
-</li>
+<li>Deny access to the requested file: <code class="docutils literal"><span class="pre">return</span> <span class="pre">'deny'</span></code></li>
 </ul>
 <p>In the <code class="docutils literal"><span class="pre">pre_flight</span></code> function, permission checking can be implemented.
 When Sipi is used with <a class="reference external" href="http://www.knora.org/">Knora</a>, the <code class="docutils literal"><span class="pre">pre_flight</span></code> function asks
@@ -196,7 +194,7 @@ size can be given. Returns <code class="docutils literal"><span class="pre">true
 </div>
 <div class="section" id="server-fs-ftype">
 <h3><a class="toc-backref" href="#id6">server.fs.ftype</a><a class="headerlink" href="#server-fs-ftype" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">filetype</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">ftype</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">path&quot;</span><span class="p">)</span>
+<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">filetype</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">ftype</span><span class="p">(</span><span class="s2">&quot;path&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Checks the filetype of a given filepath. Returns either <code class="docutils literal"><span class="pre">true,</span> <span class="pre">filetype</span></code>
@@ -246,7 +244,7 @@ failure.</p>
 </div>
 <div class="section" id="server-fs-mkdir">
 <h3><a class="toc-backref" href="#id12">server.fs.mkdir</a><a class="headerlink" href="#server-fs-mkdir" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">dirname</span><span class="p">,</span> <span class="p">[</span><span class="nb">tonumber</span><span class="p">(</span><span class="s1">&#39;</span><span class="s">0755&#39;</span><span class="p">,</span> <span class="mi">8</span><span class="p">)])</span>
+<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">dirname</span><span class="p">,</span> <span class="p">[</span><span class="nb">tonumber</span><span class="p">(</span><span class="s1">&#39;0755&#39;</span><span class="p">,</span> <span class="mi">8</span><span class="p">)])</span>
 </pre></div>
 </div>
 <p>Creates a new directory, optionally with the specified permissions. Returns
@@ -318,7 +316,7 @@ success or <code class="docutils literal"><span class="pre">false,</span> <span 
 </div>
 <div class="section" id="server-http">
 <h3><a class="toc-backref" href="#id21">server.http</a><a class="headerlink" href="#server-http" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">http</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="s2">&quot;</span><span class="s">http://server.domain[:port]/path/file&quot;</span> <span class="p">[,</span> <span class="n">header</span><span class="p">]</span> <span class="p">[,</span> <span class="n">timeout</span><span class="p">])</span>
+<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">http</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="s2">&quot;http://server.domain[:port]/path/file&quot;</span> <span class="p">[,</span> <span class="n">header</span><span class="p">]</span> <span class="p">[,</span> <span class="n">timeout</span><span class="p">])</span>
 </pre></div>
 </div>
 <p>Performs an HTTP request. Parameters:</p>
@@ -332,9 +330,9 @@ success or <code class="docutils literal"><span class="pre">false,</span> <span 
 <p>The result is a table:</p>
 <div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
     <span class="n">status_code</span> <span class="o">=</span> <span class="n">value</span> <span class="c1">-- HTTP status code returned</span>
-    <span class="n">erromsg</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="s">error description&quot;</span> <span class="c1">-- only if success is false</span>
+    <span class="n">erromsg</span> <span class="o">=</span> <span class="s2">&quot;error description&quot;</span> <span class="c1">-- only if success is false</span>
     <span class="n">header</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="n">value</span> <span class="p">[,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">value</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">value</span> <span class="p">[,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">value</span><span class="p">,</span> <span class="p">...]</span>
     <span class="p">},</span>
     <span class="n">certificate</span> <span class="o">=</span> <span class="p">{</span> <span class="c1">-- only if HTTPS connection</span>
         <span class="n">subject</span> <span class="o">=</span> <span class="n">value</span><span class="p">,</span>
@@ -346,21 +344,21 @@ success or <code class="docutils literal"><span class="pre">false,</span> <span 
 </pre></div>
 </div>
 <p>Example:</p>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">http</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">GET&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="s">http://www.salsah.org/api/resources/1&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">http</span><span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="s2">&quot;http://www.salsah.org/api/resources/1&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 
-<span class="k">if</span> <span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">success</span><span class="p">)</span> <span class="k">then</span>
-   <span class="n">server</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">&lt;table&gt;&quot;</span><span class="p">)</span>
-   <span class="n">server</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">&lt;tr&gt;&lt;th&gt;Field&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;/tr&gt;&quot;</span><span class="p">)</span>
-   <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="k">in</span> <span class="nb">pairs</span><span class="p">(</span><span class="n">server</span><span class="p">.</span><span class="n">header</span><span class="p">)</span> <span class="k">do</span>
-       <span class="n">server</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">&lt;tr&gt;&lt;td&gt;&quot;</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="s2">&quot;</span><span class="s">&lt;/td&gt;&lt;td&gt;&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="s2">&quot;</span><span class="s">&lt;/td&gt;&lt;/tr&gt;&quot;</span><span class="p">)</span>
-   <span class="k">end</span>
-   <span class="n">server</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">&lt;/table&gt;&lt;hr/&gt;&quot;</span><span class="p">)</span>
+<span class="kr">if</span> <span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">success</span><span class="p">)</span> <span class="kr">then</span>
+   <span class="n">server</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;&lt;table&gt;&quot;</span><span class="p">)</span>
+   <span class="n">server</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;&lt;tr&gt;&lt;th&gt;Field&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;/tr&gt;&quot;</span><span class="p">)</span>
+   <span class="kr">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="kr">in</span> <span class="nb">pairs</span><span class="p">(</span><span class="n">server</span><span class="p">.</span><span class="n">header</span><span class="p">)</span> <span class="kr">do</span>
+       <span class="n">server</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;&lt;tr&gt;&lt;td&gt;&quot;</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="s2">&quot;&lt;/td&gt;&lt;td&gt;&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="s2">&quot;&lt;/td&gt;&lt;/tr&gt;&quot;</span><span class="p">)</span>
+   <span class="kr">end</span>
+   <span class="n">server</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;&lt;/table&gt;&lt;hr/&gt;&quot;</span><span class="p">)</span>
 
-   <span class="n">server</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">Duration: &quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="n">duration</span><span class="p">,</span> <span class="s2">&quot;</span><span class="s"> ms&lt;br/&gt;&lt;hr/&gt;&quot;</span><span class="p">)</span>
-   <span class="n">server</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">Body:&lt;br/&gt;&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="n">body</span><span class="p">)</span>
-<span class="k">else</span>
-   <span class="n">server</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">ERROR: &quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="n">errmsg</span><span class="p">)</span>
-<span class="k">end</span>
+   <span class="n">server</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;Duration: &quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="n">duration</span><span class="p">,</span> <span class="s2">&quot; ms&lt;br/&gt;&lt;hr/&gt;&quot;</span><span class="p">)</span>
+   <span class="n">server</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;Body:&lt;br/&gt;&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="n">body</span><span class="p">)</span>
+<span class="kr">else</span>
+   <span class="n">server</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;ERROR: &quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="n">errmsg</span><span class="p">)</span>
+<span class="kr">end</span>
 </pre></div>
 </div>
 </div>
@@ -456,62 +454,62 @@ The audience value is a string, typically the base address of the resource being
 </div>
 <p>Example:</p>
 <div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">auth</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">requireAuth</span><span class="p">()</span>
-<span class="k">if</span> <span class="ow">not</span> <span class="n">success</span> <span class="k">then</span>
+<span class="kr">if</span> <span class="ow">not</span> <span class="n">success</span> <span class="kr">then</span>
     <span class="n">server</span><span class="p">.</span><span class="n">sendStatus</span><span class="p">(</span><span class="mi">501</span><span class="p">)</span>
-    <span class="n">server</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">Error in getting authentication scheme!&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
-<span class="k">end</span>
+    <span class="n">server</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;Error in getting authentication scheme!&quot;</span><span class="p">)</span>
+    <span class="kr">return</span> <span class="o">-</span><span class="mi">1</span>
+<span class="kr">end</span>
 
-<span class="k">if</span> <span class="n">auth</span><span class="p">.</span><span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="s">BASIC&#39;</span> <span class="k">then</span>
+<span class="kr">if</span> <span class="n">auth</span><span class="p">.</span><span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;BASIC&#39;</span> <span class="kr">then</span>
     <span class="c1">--</span>
     <span class="c1">-- everything OK, let&#39;s create the token for further calls and ad it to a cookie</span>
     <span class="c1">--</span>
-    <span class="k">if</span> <span class="n">auth</span><span class="p">.</span><span class="n">username</span> <span class="o">==</span> <span class="n">config</span><span class="p">.</span><span class="n">adminuser</span> <span class="ow">and</span> <span class="n">auth</span><span class="p">.</span><span class="n">password</span> <span class="o">==</span> <span class="n">config</span><span class="p">.</span><span class="n">password</span> <span class="k">then</span>
+    <span class="kr">if</span> <span class="n">auth</span><span class="p">.</span><span class="n">username</span> <span class="o">==</span> <span class="n">config</span><span class="p">.</span><span class="n">adminuser</span> <span class="ow">and</span> <span class="n">auth</span><span class="p">.</span><span class="n">password</span> <span class="o">==</span> <span class="n">config</span><span class="p">.</span><span class="n">password</span> <span class="kr">then</span>
         <span class="n">tokendata</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="n">iss</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="s">sipi.unibas.ch&quot;</span><span class="p">,</span>
-            <span class="n">aud</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="s">knora.org&quot;</span><span class="p">,</span>
+            <span class="n">iss</span> <span class="o">=</span> <span class="s2">&quot;sipi.unibas.ch&quot;</span><span class="p">,</span>
+            <span class="n">aud</span> <span class="o">=</span> <span class="s2">&quot;knora.org&quot;</span><span class="p">,</span>
             <span class="n">user</span> <span class="o">=</span> <span class="n">auth</span><span class="p">.</span><span class="n">username</span>
         <span class="p">}</span>
         <span class="n">success</span><span class="p">,</span> <span class="n">token</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">generate_jwt</span><span class="p">(</span><span class="n">tokendata</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">success</span> <span class="k">then</span>
+        <span class="kr">if</span> <span class="ow">not</span> <span class="n">success</span> <span class="kr">then</span>
             <span class="n">server</span><span class="p">.</span><span class="n">sendStatus</span><span class="p">(</span><span class="mi">501</span><span class="p">)</span>
-            <span class="n">server</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">Could not generate JWT!&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
-        <span class="k">end</span>
-        <span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">sendCookie</span><span class="p">(</span><span class="s1">&#39;</span><span class="s">sipi&#39;</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="p">{</span><span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="s">/&#39;</span><span class="p">,</span> <span class="n">expires</span> <span class="o">=</span> <span class="mi">3600</span><span class="p">})</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">success</span> <span class="k">then</span>
+            <span class="n">server</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;Could not generate JWT!&quot;</span><span class="p">)</span>
+            <span class="kr">return</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="kr">end</span>
+        <span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">sendCookie</span><span class="p">(</span><span class="s1">&#39;sipi&#39;</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="p">{</span><span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="n">expires</span> <span class="o">=</span> <span class="mi">3600</span><span class="p">})</span>
+        <span class="kr">if</span> <span class="ow">not</span> <span class="n">success</span> <span class="kr">then</span>
             <span class="n">server</span><span class="p">.</span><span class="n">sendStatus</span><span class="p">(</span><span class="mi">501</span><span class="p">)</span>
-            <span class="n">server</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">Couldn&#39;t send cookie with JWT!&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
-        <span class="k">end</span>
-    <span class="k">else</span>
+            <span class="n">server</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t send cookie with JWT!&quot;</span><span class="p">)</span>
+            <span class="kr">return</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="kr">end</span>
+    <span class="kr">else</span>
         <span class="n">server</span><span class="p">.</span><span class="n">sendStatus</span><span class="p">(</span><span class="mi">401</span><span class="p">)</span>
-        <span class="n">server</span><span class="p">.</span><span class="n">sendHeader</span><span class="p">(</span><span class="s1">&#39;</span><span class="s">WWW-Authenticate&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="s">Basic realm=&quot;Sipi&quot;&#39;</span><span class="p">)</span>
-        <span class="n">server</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">Wrong credentials!&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
-    <span class="k">end</span>
-<span class="k">elseif</span> <span class="n">auth</span><span class="p">.</span><span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="s">BEARER&#39;</span> <span class="k">then</span>
+        <span class="n">server</span><span class="p">.</span><span class="n">sendHeader</span><span class="p">(</span><span class="s1">&#39;WWW-Authenticate&#39;</span><span class="p">,</span> <span class="s1">&#39;Basic realm=&quot;Sipi&quot;&#39;</span><span class="p">)</span>
+        <span class="n">server</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;Wrong credentials!&quot;</span><span class="p">)</span>
+        <span class="kr">return</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="kr">end</span>
+<span class="kr">elseif</span> <span class="n">auth</span><span class="p">.</span><span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;BEARER&#39;</span> <span class="kr">then</span>
     <span class="n">success</span><span class="p">,</span> <span class="n">jwt</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">decode_jwt</span><span class="p">(</span><span class="n">auth</span><span class="p">.</span><span class="n">token</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">success</span> <span class="k">then</span>
+    <span class="kr">if</span> <span class="ow">not</span> <span class="n">success</span> <span class="kr">then</span>
         <span class="n">server</span><span class="p">.</span><span class="n">sendStatus</span><span class="p">(</span><span class="mi">501</span><span class="p">)</span>
-        <span class="n">server</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">Couldn&#39;t deocde JWT!&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
-    <span class="k">end</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">jwt</span><span class="p">.</span><span class="n">iss</span> <span class="o">~=</span> <span class="s1">&#39;</span><span class="s">sipi.unibas.ch&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">jwt</span><span class="p">.</span><span class="n">aud</span> <span class="o">~=</span> <span class="s1">&#39;</span><span class="s">knora.org&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">jwt</span><span class="p">.</span><span class="n">user</span> <span class="o">~=</span> <span class="n">config</span><span class="p">.</span><span class="n">adminuser</span><span class="p">)</span> <span class="k">then</span>
+        <span class="n">server</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t deocde JWT!&quot;</span><span class="p">)</span>
+        <span class="kr">return</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="kr">end</span>
+    <span class="kr">if</span> <span class="p">(</span><span class="n">jwt</span><span class="p">.</span><span class="n">iss</span> <span class="o">~=</span> <span class="s1">&#39;sipi.unibas.ch&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">jwt</span><span class="p">.</span><span class="n">aud</span> <span class="o">~=</span> <span class="s1">&#39;knora.org&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">jwt</span><span class="p">.</span><span class="n">user</span> <span class="o">~=</span> <span class="n">config</span><span class="p">.</span><span class="n">adminuser</span><span class="p">)</span> <span class="kr">then</span>
         <span class="n">server</span><span class="p">.</span><span class="n">sendStatus</span><span class="p">(</span><span class="mi">401</span><span class="p">)</span>
-        <span class="n">server</span><span class="p">.</span><span class="n">sendHeader</span><span class="p">(</span><span class="s1">&#39;</span><span class="s">WWW-Authenticate&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="s">Basic realm=&quot;Sipi&quot;&#39;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
-    <span class="k">end</span>
-<span class="k">elseif</span> <span class="n">auth</span><span class="p">.</span><span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="s">NOAUTH&#39;</span> <span class="k">then</span>
+        <span class="n">server</span><span class="p">.</span><span class="n">sendHeader</span><span class="p">(</span><span class="s1">&#39;WWW-Authenticate&#39;</span><span class="p">,</span> <span class="s1">&#39;Basic realm=&quot;Sipi&quot;&#39;</span><span class="p">)</span>
+        <span class="kr">return</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="kr">end</span>
+<span class="kr">elseif</span> <span class="n">auth</span><span class="p">.</span><span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;NOAUTH&#39;</span> <span class="kr">then</span>
     <span class="n">server</span><span class="p">.</span><span class="n">setBuffer</span><span class="p">()</span>
     <span class="n">server</span><span class="p">.</span><span class="n">sendStatus</span><span class="p">(</span><span class="mi">401</span><span class="p">);</span>
-    <span class="n">server</span><span class="p">.</span><span class="n">sendHeader</span><span class="p">(</span><span class="s1">&#39;</span><span class="s">WWW-Authenticate&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="s">Basic realm=&quot;Sipi&quot;&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
-<span class="k">else</span>
+    <span class="n">server</span><span class="p">.</span><span class="n">sendHeader</span><span class="p">(</span><span class="s1">&#39;WWW-Authenticate&#39;</span><span class="p">,</span> <span class="s1">&#39;Basic realm=&quot;Sipi&quot;&#39;</span><span class="p">)</span>
+    <span class="kr">return</span> <span class="o">-</span><span class="mi">1</span>
+<span class="kr">else</span>
     <span class="n">server</span><span class="p">.</span><span class="n">status</span><span class="p">(</span><span class="mi">401</span><span class="p">)</span>
-    <span class="n">server</span><span class="p">.</span><span class="n">sendHeader</span><span class="p">(</span><span class="s1">&#39;</span><span class="s">WWW-Authenticate&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="s">Basic realm=&quot;Sipi&quot;&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
-<span class="k">end</span>
+    <span class="n">server</span><span class="p">.</span><span class="n">sendHeader</span><span class="p">(</span><span class="s1">&#39;WWW-Authenticate&#39;</span><span class="p">,</span> <span class="s1">&#39;Basic realm=&quot;Sipi&quot;&#39;</span><span class="p">)</span>
+    <span class="kr">return</span> <span class="o">-</span><span class="mi">1</span>
+<span class="kr">end</span>
 </pre></div>
 </div>
 </div>
@@ -546,32 +544,21 @@ failure.</p>
 </div>
 <div class="section" id="sipi-variables-available-to-lua-scripts">
 <h2><a class="toc-backref" href="#id32">Sipi Variables Available to Lua Scripts</a><a class="headerlink" href="#sipi-variables-available-to-lua-scripts" title="Permalink to this headline">¶</a></h2>
-<ul>
-<li><p class="first"><code class="docutils literal"><span class="pre">server.has_openssl</span></code>: <code class="docutils literal"><span class="pre">true</span></code> if OpenSSL is available.</p>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">server.secure</span></code>: <code class="docutils literal"><span class="pre">true</span></code> if the connection was made over HTTPS.</p>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">server.host</span></code>: the hostname of the Sipi server that was used in the request.</p>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">server.client_ip</span></code>: the IPv4 or IPv6 address of the client connecting to Sipi.</p>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">server.client_port</span></code>: the port number of the client socket.</p>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">server.uri</span></code>: the URL path used to access Sipi (does not include the hostname).</p>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">server.header</span></code>: a table containing all the HTTP request headers (in lowercase).</p>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">server.cookies</span></code>: a table of the cookies that were sent with the request.</p>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">server.get</span></code>: a table of GET request parameters.</p>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">server.post</span></code>: a table of POST request parameters.</p>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">server.request</span></code>: all request parameters.</p>
-</li>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">server.has_openssl</span></code>: <code class="docutils literal"><span class="pre">true</span></code> if OpenSSL is available.</li>
+<li><code class="docutils literal"><span class="pre">server.secure</span></code>: <code class="docutils literal"><span class="pre">true</span></code> if the connection was made over HTTPS.</li>
+<li><code class="docutils literal"><span class="pre">server.host</span></code>: the hostname of the Sipi server that was used in the request.</li>
+<li><code class="docutils literal"><span class="pre">server.client_ip</span></code>: the IPv4 or IPv6 address of the client connecting to Sipi.</li>
+<li><code class="docutils literal"><span class="pre">server.client_port</span></code>: the port number of the client socket.</li>
+<li><code class="docutils literal"><span class="pre">server.uri</span></code>: the URL path used to access Sipi (does not include the hostname).</li>
+<li><code class="docutils literal"><span class="pre">server.header</span></code>: a table containing all the HTTP request headers (in lowercase).</li>
+<li><code class="docutils literal"><span class="pre">server.cookies</span></code>: a table of the cookies that were sent with the request.</li>
+<li><code class="docutils literal"><span class="pre">server.get</span></code>: a table of GET request parameters.</li>
+<li><code class="docutils literal"><span class="pre">server.post</span></code>: a table of POST request parameters.</li>
+<li><code class="docutils literal"><span class="pre">server.request</span></code>: all request parameters.</li>
 <li><dl class="first docutils">
 <dt><code class="docutils literal"><span class="pre">server.uploads</span></code>: an array of upload parameters, one per file. Each one is a table containing:</dt>
-<dd><ul class="first last simple">
+<dd><ul class="first last">
 <li><code class="docutils literal"><span class="pre">fieldname</span></code>: the name of the form field.</li>
 <li><code class="docutils literal"><span class="pre">origname</span></code>: the original filename.</li>
 <li><code class="docutils literal"><span class="pre">tmpname</span></code>: a temporary path to the uploaded file.</li>
@@ -596,13 +583,13 @@ failure.</p>
 <span class="pre">prepended,</span> <span class="pre">e.g</span> <span class="pre">`gaga.jp2</span></code> becomes <code class="docutils literal"><span class="pre">C/W/gaga.jpg</span></code></p>
 <p>Example:</p>
 <div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">newfilepath</span> <span class="o">=</span> <span class="n">helper</span><span class="p">.</span><span class="n">filename_hash</span><span class="p">(</span><span class="n">newfilename</span><span class="p">[</span><span class="n">imgindex</span><span class="p">]);</span>
-<span class="k">if</span> <span class="ow">not</span> <span class="n">success</span> <span class="k">then</span>
+<span class="kr">if</span> <span class="ow">not</span> <span class="n">success</span> <span class="kr">then</span>
     <span class="n">server</span><span class="p">.</span><span class="n">sendStatus</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
     <span class="n">server</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">gaga</span><span class="p">,</span> <span class="n">server</span><span class="p">.</span><span class="n">loglevel</span><span class="p">.</span><span class="nb">error</span><span class="p">)</span>
-    <span class="k">return</span> <span class="kc">false</span>
-<span class="k">end</span>
+    <span class="kr">return</span> <span class="kc">false</span>
+<span class="kr">end</span>
 
-<span class="n">filename</span> <span class="o">=</span> <span class="n">config</span><span class="p">.</span><span class="n">imgroot</span> <span class="o">..</span> <span class="s1">&#39;</span><span class="s">/&#39;</span> <span class="o">..</span> <span class="n">newfilepath</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="n">config</span><span class="p">.</span><span class="n">imgroot</span> <span class="o">..</span> <span class="s1">&#39;/&#39;</span> <span class="o">..</span> <span class="n">newfilepath</span>
 </pre></div>
 </div>
 </div>
@@ -613,17 +600,17 @@ failure.</p>
 <div class="section" id="sipiimage-new-filename">
 <h3><a class="toc-backref" href="#id36">SipiImage.new(filename)</a><a class="headerlink" href="#sipiimage-new-filename" title="Permalink to this headline">¶</a></h3>
 <p>The simple form is:</p>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">SipiImage</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">filename&quot;</span><span class="p">)</span>
+<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">SipiImage</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;filename&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The more complex form is as follows:</p>
-<div class="highlight-lua"><div class="highlight"><pre><span></span>img = SipiImage.new(&quot;filename&quot;, {
-        region=&lt;iiif-region-string&gt;,
-        size=&lt;iiif-size-string&gt;,
-        reduce=&lt;integer&gt;,
-        original=origfilename,
-        hash=&quot;md5&quot;|&quot;sha1&quot;|&quot;sha256&quot;|&quot;sha384&quot;|&quot;sha512&quot;
-      })
+<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">SipiImage</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;filename&quot;</span><span class="p">,</span> <span class="p">{</span>
+        <span class="n">region</span><span class="o">=&lt;</span><span class="n">iiif</span><span class="o">-</span><span class="n">region</span><span class="o">-</span><span class="n">string</span><span class="o">&gt;</span><span class="p">,</span>
+        <span class="n">size</span><span class="o">=&lt;</span><span class="n">iiif</span><span class="o">-</span><span class="n">size</span><span class="o">-</span><span class="n">string</span><span class="o">&gt;</span><span class="p">,</span>
+        <span class="n">reduce</span><span class="o">=&lt;</span><span class="n">integer</span><span class="o">&gt;</span><span class="p">,</span>
+        <span class="n">original</span><span class="o">=</span><span class="n">origfilename</span><span class="p">,</span>
+        <span class="n">hash</span><span class="o">=</span><span class="s2">&quot;md5&quot;</span><span class="o">|</span><span class="s2">&quot;sha1&quot;</span><span class="o">|</span><span class="s2">&quot;sha256&quot;</span><span class="o">|</span><span class="s2">&quot;sha384&quot;</span><span class="o">|</span><span class="s2">&quot;sha512&quot;</span>
+      <span class="p">})</span>
 </pre></div>
 </div>
 <p>This creates a new Lua image object and loads the given image into. The second form
@@ -634,9 +621,9 @@ pixel values and written into the header.</p>
 <div class="section" id="sipiimage-dims">
 <h3><a class="toc-backref" href="#id37">SipiImage.dims()</a><a class="headerlink" href="#sipiimage-dims" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">dims</span> <span class="o">=</span> <span class="n">img</span><span class="p">.</span><span class="n">dims</span><span class="p">()</span>
-<span class="k">if</span> <span class="n">success</span> <span class="k">then</span>
-    <span class="n">server</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="s">nx=&#39;</span><span class="p">,</span> <span class="n">dims</span><span class="p">.</span><span class="n">nx</span><span class="p">,</span> <span class="s1">&#39;</span><span class="s"> ny=&#39;</span><span class="p">,</span> <span class="n">dims</span><span class="p">.</span><span class="n">ny</span><span class="p">)</span>
-<span class="k">end</span>
+<span class="kr">if</span> <span class="n">success</span> <span class="kr">then</span>
+    <span class="n">server</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s1">&#39;nx=&#39;</span><span class="p">,</span> <span class="n">dims</span><span class="p">.</span><span class="n">nx</span><span class="p">,</span> <span class="s1">&#39; ny=&#39;</span><span class="p">,</span> <span class="n">dims</span><span class="p">.</span><span class="n">ny</span><span class="p">)</span>
+<span class="kr">end</span>
 </pre></div>
 </div>
 <p>Returns the dimensions of the image.</p>
@@ -676,7 +663,7 @@ TIFF file.</p>
 <h3><a class="toc-backref" href="#id42">SipiImage.write(&lt;filepath&gt;)</a><a class="headerlink" href="#sipiimage-write-filepath" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">img</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="o">&lt;</span><span class="n">filepath</span><span class="o">&gt;</span><span class="p">)</span>
 
-<span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">img</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="s">HTTP.jpg&#39;</span><span class="p">)</span>
+<span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">img</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;HTTP.jpg&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The first version write the image to a file, the second writes the file to the HTTP connection.
@@ -723,7 +710,7 @@ by setting <code class="docutils literal"><span class="pre">package.path</span><
 should use <a class="reference external" href="https://www.lua.org/pil/8.4.html">pcall</a> to handle errors that may be returned by SQLite.</p>
 <div class="section" id="opening-an-sqlite-database">
 <h3><a class="toc-backref" href="#id46">Opening an SQLite Database</a><a class="headerlink" href="#opening-an-sqlite-database" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">db</span> <span class="o">=</span> <span class="n">sqlite</span><span class="p">(</span><span class="s1">&#39;</span><span class="s">db/test.db&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="s">RW&#39;</span><span class="p">)</span>
+<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">db</span> <span class="o">=</span> <span class="n">sqlite</span><span class="p">(</span><span class="s1">&#39;db/test.db&#39;</span><span class="p">,</span> <span class="s1">&#39;RW&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>This creates a new opaque database object. The first parameter is the path to
@@ -739,11 +726,11 @@ all resources when they are no longer used.</p>
 </div>
 <div class="section" id="preparing-a-query">
 <h3><a class="toc-backref" href="#id47">Preparing a Query</a><a class="headerlink" href="#preparing-a-query" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">qry</span> <span class="o">=</span> <span class="n">db</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="s">SELECT * FROM image&#39;</span>
+<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">qry</span> <span class="o">=</span> <span class="n">db</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;SELECT * FROM image&#39;</span>
 </pre></div>
 </div>
 <p>Or, if you want to use a prepared query statement:</p>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">qry</span> <span class="o">=</span> <span class="n">db</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="s">INSERT INTO image (id, description) VALUES (?,?)&#39;</span>
+<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">qry</span> <span class="o">=</span> <span class="n">db</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;INSERT INTO image (id, description) VALUES (?,?)&#39;</span>
 </pre></div>
 </div>
 <p><code class="docutils literal"><span class="pre">qry</span></code> will then be a query object containing a prepared query. If the
@@ -756,14 +743,14 @@ query object is not needed anymore, it may be destroyed:</p>
 <div class="section" id="executing-a-query">
 <h3><a class="toc-backref" href="#id48">Executing a Query</a><a class="headerlink" href="#executing-a-query" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">row</span> <span class="o">=</span> <span class="n">qry</span><span class="p">()</span>
-<span class="k">while</span> <span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="k">do</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;</span><span class="s"> -&gt; &#39;</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="kr">while</span> <span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="kr">do</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39; -&gt; &#39;</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
     <span class="n">row</span> <span class="o">=</span> <span class="n">qry</span><span class="p">()</span>
-<span class="k">end</span>
+<span class="kr">end</span>
 </pre></div>
 </div>
 <p>Or with a prepared statement:</p>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">qry</span><span class="p">(</span><span class="s1">&#39;</span><span class="s">SGV_1960_00315&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="s">This is an image of a steam engine...&#39;</span><span class="p">)</span>
+<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">qry</span><span class="p">(</span><span class="s1">&#39;SGV_1960_00315&#39;</span><span class="p">,</span> <span class="s1">&#39;This is an image of a steam engine...&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The second way is used for prepared queries that contain parameters.</p>
@@ -779,6 +766,7 @@ query object is not needed anymore, it may be destroyed:</p>
         <div class="sidebar">
           <h3>Table Of Contents</h3>
           <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="0-release-notes/index.html">Release Notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="building.html">Building Sipi from Source Code</a></li>
 <li class="toctree-l1"><a class="reference internal" href="running.html">Running Sipi</a></li>
@@ -824,7 +812,7 @@ query object is not needed anymore, it may be destroyed:</p>
           </div>
           <div role="note" aria-label="source link">
               <br/>
-              <a href="_sources/lua.txt"
+              <a href="_sources/lua.rst.txt"
                 rel="nofollow">Show Source</a>
           </div>
         </div>
@@ -832,8 +820,8 @@ query object is not needed anymore, it may be destroyed:</p>
         <div class="right">
           
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2017, Lukas Rosenthaler, Andrea Bianco, Benjamin Geer, Tobias Schweizer, Ivan Subotic.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+        &#169; Copyright 2017-2018, Lukas Rosenthaler, Andrea Bianco, Benjamin Geer, Tobias Schweizer, Ivan Subotic.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.3.
     </div>
         </div>
         <div class="clearer"></div>
