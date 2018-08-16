@@ -1,26 +1,15 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Customizing Sipi with Lua Scripts &#8212; Sipi v1.2.0 documentation</title>
-    
+    <title>Customizing Sipi with Lua Scripts &#8212; Sipi v1.4.0 documentation</title>
     <link rel="stylesheet" href="_static/agogo.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     'v1.2.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -28,12 +17,11 @@
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Developing Sipi" href="developing.html" />
     <link rel="prev" title="Running Sipi" href="running.html" /> 
-  </head>
-  <body role="document">
+  </head><body>
     <div class="header-wrapper" role="banner">
       <div class="header">
         <div class="headertitle"><a
-          href="index.html">Sipi v1.2.0 documentation</a></div>
+          href="index.html">Sipi v1.4.0 documentation</a></div>
         <div class="rel" role="navigation" aria-label="related navigation">
           <a href="running.html" title="Running Sipi"
              accesskey="P">previous</a> |
@@ -118,15 +106,15 @@
 <p>Within Sipi, Lua is used to perform authentication and authorization
 for IIIF image requests, and to write custom routes.</p>
 <p>Sipi provides the Lua interpreter the <a class="reference external" href="https://luarocks.org/">LuaRocks</a> package manager. Sipi does not
-use the system&#8217;s Lua interpreter or package manager.</p>
+use the system’s Lua interpreter or package manager.</p>
 <p>The Lua interpreter in Sipi runs in a multithreaded environment: each
 request runs in its own thread and has its own Lua interpreter. Therefore,
 only Lua packages that are known to be thread-safe may be used.</p>
 <div class="section" id="custom-routes">
 <h2><a class="toc-backref" href="#id1">Custom Routes</a><a class="headerlink" href="#custom-routes" title="Permalink to this headline">¶</a></h2>
-<p>Custom routes can be defined in Sipi&#8217;s configuration file using the
-<code class="docutils literal"><span class="pre">routes</span></code> configuration variable. For example:</p>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">routes</span> <span class="o">=</span> <span class="p">{</span>
+<p>Custom routes can be defined in Sipi’s configuration file using the
+<code class="docutils literal notranslate"><span class="pre">routes</span></code> configuration variable. For example:</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">routes</span> <span class="o">=</span> <span class="p">{</span>
     <span class="p">{</span>
         <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;GET&#39;</span><span class="p">,</span>
         <span class="n">route</span> <span class="o">=</span> <span class="s1">&#39;/status&#39;</span><span class="p">,</span>
@@ -140,195 +128,195 @@ only Lua packages that are known to be thread-safe may be used.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Sipi looks for these scripts in the directory specified by <code class="docutils literal"><span class="pre">scriptdir</span></code> in
+<p>Sipi looks for these scripts in the directory specified by <code class="docutils literal notranslate"><span class="pre">scriptdir</span></code> in
 its configuration file. The first route that matches the beginning of the
 requested URL path will be used.</p>
 </div>
 <div class="section" id="authentication-and-authorization">
 <h2><a class="toc-backref" href="#id2">Authentication and Authorization</a><a class="headerlink" href="#authentication-and-authorization" title="Permalink to this headline">¶</a></h2>
-<p>In Sipi&#8217;s config file, <code class="docutils literal"><span class="pre">initscript</span></code> contains the path of a Lua script that
-defines a function called <code class="docutils literal"><span class="pre">pre_flight</span></code>. The function takes the
-parameters <code class="docutils literal"><span class="pre">prefix</span></code>, <code class="docutils literal"><span class="pre">identifier</span></code> and, <code class="docutils literal"><span class="pre">cookie</span></code>, and is called
+<p>In Sipi’s config file, <code class="docutils literal notranslate"><span class="pre">initscript</span></code> contains the path of a Lua script that
+defines a function called <code class="docutils literal notranslate"><span class="pre">pre_flight</span></code>. The function takes the
+parameters <code class="docutils literal notranslate"><span class="pre">prefix</span></code>, <code class="docutils literal notranslate"><span class="pre">identifier</span></code> and, <code class="docutils literal notranslate"><span class="pre">cookie</span></code>, and is called
 whenever an image is requested.</p>
-<p>The possible return values of the <code class="docutils literal"><span class="pre">pre_flight</span></code> function are as follows.
-Note that Lua function&#8217;s return value may consist of more than one element
+<p>The possible return values of the <code class="docutils literal notranslate"><span class="pre">pre_flight</span></code> function are as follows.
+Note that Lua function’s return value may consist of more than one element
 (see <a class="reference external" href="http://www.lua.org/pil/5.1.html">Multiple Results</a>):</p>
 <ul class="simple">
-<li>Grant full permissions to access the file identified by <code class="docutils literal"><span class="pre">filepath</span></code>: <code class="docutils literal"><span class="pre">return</span> <span class="pre">'allow',</span> <span class="pre">filepath</span></code></li>
+<li>Grant full permissions to access the file identified by <code class="docutils literal notranslate"><span class="pre">filepath</span></code>: <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">'allow',</span> <span class="pre">filepath</span></code></li>
 <li><dl class="first docutils">
-<dt>Grant restricted access to the file identified by <code class="docutils literal"><span class="pre">filepath</span></code>, in one of the following ways:</dt>
+<dt>Grant restricted access to the file identified by <code class="docutils literal notranslate"><span class="pre">filepath</span></code>, in one of the following ways:</dt>
 <dd><ul class="first last">
-<li>Reduce the image dimensions, e.g. to the default thumbnail dimensions: <code class="docutils literal"><span class="pre">return</span> <span class="pre">'restrict:size='</span> <span class="pre">..</span> <span class="pre">&quot;config.thumb_size&quot;,</span> <span class="pre">filepath</span></code></li>
-<li>Render the image with a watermark: <code class="docutils literal"><span class="pre">return</span> <span class="pre">restrict:watermark=&lt;path-to-watermark&gt;,</span> <span class="pre">filepath</span></code></li>
+<li>Reduce the image dimensions, e.g. to the default thumbnail dimensions: <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">'restrict:size='</span> <span class="pre">..</span> <span class="pre">&quot;config.thumb_size&quot;,</span> <span class="pre">filepath</span></code></li>
+<li>Render the image with a watermark: <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">restrict:watermark=&lt;path-to-watermark&gt;,</span> <span class="pre">filepath</span></code></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li>Deny access to the requested file: <code class="docutils literal"><span class="pre">return</span> <span class="pre">'deny'</span></code></li>
+<li>Deny access to the requested file: <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">'deny'</span></code></li>
 </ul>
-<p>In the <code class="docutils literal"><span class="pre">pre_flight</span></code> function, permission checking can be implemented.
-When Sipi is used with <a class="reference external" href="http://www.knora.org/">Knora</a>, the <code class="docutils literal"><span class="pre">pre_flight</span></code> function asks
-Knora about the user&#8217;s permissions on the image
-(see <code class="docutils literal"><span class="pre">sipi.init-knora.lua</span></code>). The scripts <code class="docutils literal"><span class="pre">Knora_login.lua</span></code> and
-<code class="docutils literal"><span class="pre">Knora_logout.lua</span></code> handle the setting and unsetting of a cookie
+<p>In the <code class="docutils literal notranslate"><span class="pre">pre_flight</span></code> function, permission checking can be implemented.
+When Sipi is used with <a class="reference external" href="http://www.knora.org/">Knora</a>, the <code class="docutils literal notranslate"><span class="pre">pre_flight</span></code> function asks
+Knora about the user’s permissions on the image
+(see <code class="docutils literal notranslate"><span class="pre">sipi.init-knora.lua</span></code>). The scripts <code class="docutils literal notranslate"><span class="pre">Knora_login.lua</span></code> and
+<code class="docutils literal notranslate"><span class="pre">Knora_logout.lua</span></code> handle the setting and unsetting of a cookie
 containing the Knora session ID.</p>
 </div>
 <div class="section" id="file-uploads-to-sipi">
 <h2><a class="toc-backref" href="#id3">File uploads to SIPI</a><a class="headerlink" href="#file-uploads-to-sipi" title="Permalink to this headline">¶</a></h2>
 <p>Using Lua it is possible to create an upload function for image files. See the
-scripts <code class="docutils literal"><span class="pre">upload.elua``and</span> <span class="pre">``do-upload.elua</span></code> in the server directory</p>
+scripts <code class="docutils literal notranslate"><span class="pre">upload.elua``and</span> <span class="pre">``do-upload.elua</span></code> in the server directory</p>
 </div>
 <div class="section" id="sipi-functions-available-to-lua-scripts">
 <h2><a class="toc-backref" href="#id4">Sipi Functions Available to Lua Scripts</a><a class="headerlink" href="#sipi-functions-available-to-lua-scripts" title="Permalink to this headline">¶</a></h2>
 <p>Sipi provides the following functions that can be called from Lua scripts.
-Each function returns two values. The first value is <code class="docutils literal"><span class="pre">true</span></code> if the operation
-succeeded, <code class="docutils literal"><span class="pre">false</span></code> otherwise. If the operation succeeded, the second value
+Each function returns two values. The first value is <code class="docutils literal notranslate"><span class="pre">true</span></code> if the operation
+succeeded, <code class="docutils literal notranslate"><span class="pre">false</span></code> otherwise. If the operation succeeded, the second value
 is the result of the operation, otherwise it is an error message.</p>
 <div class="section" id="server-setbuffer">
 <h3><a class="toc-backref" href="#id5">server.setBuffer</a><a class="headerlink" href="#server-setbuffer" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">errmsg</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">setBuffer</span><span class="p">([</span><span class="n">bufsize</span><span class="p">][,</span><span class="n">incsize</span><span class="p">])</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">errmsg</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">setBuffer</span><span class="p">([</span><span class="n">bufsize</span><span class="p">][,</span><span class="n">incsize</span><span class="p">])</span>
 </pre></div>
 </div>
 <p>Activates the the connection buffer. Optionally the buffer size and increment
-size can be given. Returns <code class="docutils literal"><span class="pre">true,</span> <span class="pre">nil</span></code> on success or <code class="docutils literal"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure.</p>
+size can be given. Returns <code class="docutils literal notranslate"><span class="pre">true,</span> <span class="pre">nil</span></code> on success or <code class="docutils literal notranslate"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure.</p>
 </div>
 <div class="section" id="server-fs-ftype">
 <h3><a class="toc-backref" href="#id6">server.fs.ftype</a><a class="headerlink" href="#server-fs-ftype" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">filetype</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">ftype</span><span class="p">(</span><span class="s2">&quot;path&quot;</span><span class="p">)</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">filetype</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">ftype</span><span class="p">(</span><span class="s2">&quot;path&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Checks the filetype of a given filepath. Returns either <code class="docutils literal"><span class="pre">true,</span> <span class="pre">filetype</span></code>
-(one of <code class="docutils literal"><span class="pre">&quot;FILE&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;DIRECTORY&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;CHARDEV&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;BLOCKDEV&quot;</span></code>,
-<code class="docutils literal"><span class="pre">&quot;LINK&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;SOCKET&quot;</span></code> or <code class="docutils literal"><span class="pre">&quot;UNKNOWN&quot;</span></code>) or <code class="docutils literal"><span class="pre">false,</span> <span class="pre">errormsg</span></code>.</p>
+<p>Checks the filetype of a given filepath. Returns either <code class="docutils literal notranslate"><span class="pre">true,</span> <span class="pre">filetype</span></code>
+(one of <code class="docutils literal notranslate"><span class="pre">&quot;FILE&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;DIRECTORY&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;CHARDEV&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;BLOCKDEV&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">&quot;LINK&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;SOCKET&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;UNKNOWN&quot;</span></code>) or <code class="docutils literal notranslate"><span class="pre">false,</span> <span class="pre">errormsg</span></code>.</p>
 </div>
 <div class="section" id="server-fs-is-readable">
 <h3><a class="toc-backref" href="#id7">server.fs.is_readable</a><a class="headerlink" href="#server-fs-is-readable" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">readable</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">is_readable</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">readable</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">is_readable</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Checks if a file is readable. Returns <code class="docutils literal"><span class="pre">true,</span> <span class="pre">readable</span></code> (boolean) on success
-or <code class="docutils literal"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure.</p>
+<p>Checks if a file is readable. Returns <code class="docutils literal notranslate"><span class="pre">true,</span> <span class="pre">readable</span></code> (boolean) on success
+or <code class="docutils literal notranslate"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure.</p>
 </div>
 <div class="section" id="server-fs-is-writeable">
 <h3><a class="toc-backref" href="#id8">server.fs.is_writeable</a><a class="headerlink" href="#server-fs-is-writeable" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">writeable</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">is_writeable</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">writeable</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">is_writeable</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Checks if a file is writeable. Returns <code class="docutils literal"><span class="pre">true,</span> <span class="pre">writeable</span></code> (boolean) on
-success or <code class="docutils literal"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure.</p>
+<p>Checks if a file is writeable. Returns <code class="docutils literal notranslate"><span class="pre">true,</span> <span class="pre">writeable</span></code> (boolean) on
+success or <code class="docutils literal notranslate"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure.</p>
 </div>
 <div class="section" id="server-fs-is-executable">
 <h3><a class="toc-backref" href="#id9">server.fs.is_executable</a><a class="headerlink" href="#server-fs-is-executable" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">is_executable</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">is_executable</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Checks if a file is executable. Returns <code class="docutils literal"><span class="pre">true,</span> <span class="pre">executable</span></code> (boolean) on
-success or <code class="docutils literal"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure.</p>
+<p>Checks if a file is executable. Returns <code class="docutils literal notranslate"><span class="pre">true,</span> <span class="pre">executable</span></code> (boolean) on
+success or <code class="docutils literal notranslate"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure.</p>
 </div>
 <div class="section" id="server-fs-exists">
 <h3><a class="toc-backref" href="#id10">server.fs.exists</a><a class="headerlink" href="#server-fs-exists" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">exists</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">exists</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Checks if a file exists. Checks if a file exists. Returns <code class="docutils literal"><span class="pre">true,</span> <span class="pre">exists</span></code>
-(boolean) on success or <code class="docutils literal"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure.</p>
+<p>Checks if a file exists. Checks if a file exists. Returns <code class="docutils literal notranslate"><span class="pre">true,</span> <span class="pre">exists</span></code>
+(boolean) on success or <code class="docutils literal notranslate"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure.</p>
 </div>
 <div class="section" id="server-fs-unlink">
 <h3><a class="toc-backref" href="#id11">server.fs.unlink</a><a class="headerlink" href="#server-fs-unlink" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Deletes a file from the file system. The file must exist and the user must
-have write access. Returns <code class="docutils literal"><span class="pre">true,</span> <span class="pre">nil</span></code> on success or <code class="docutils literal"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on
+have write access. Returns <code class="docutils literal notranslate"><span class="pre">true,</span> <span class="pre">nil</span></code> on success or <code class="docutils literal notranslate"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on
 failure.</p>
 </div>
 <div class="section" id="server-fs-mkdir">
 <h3><a class="toc-backref" href="#id12">server.fs.mkdir</a><a class="headerlink" href="#server-fs-mkdir" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">dirname</span><span class="p">,</span> <span class="p">[</span><span class="nb">tonumber</span><span class="p">(</span><span class="s1">&#39;0755&#39;</span><span class="p">,</span> <span class="mi">8</span><span class="p">)])</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">dirname</span><span class="p">,</span> <span class="p">[</span><span class="nb">tonumber</span><span class="p">(</span><span class="s1">&#39;0755&#39;</span><span class="p">,</span> <span class="mi">8</span><span class="p">)])</span>
 </pre></div>
 </div>
 <p>Creates a new directory, optionally with the specified permissions. Returns
-<code class="docutils literal"><span class="pre">true,</span> <span class="pre">nil</span></code> on success or <code class="docutils literal"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure.</p>
+<code class="docutils literal notranslate"><span class="pre">true,</span> <span class="pre">nil</span></code> on success or <code class="docutils literal notranslate"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure.</p>
 </div>
 <div class="section" id="server-fs-rmdir">
 <h3><a class="toc-backref" href="#id13">server.fs.rmdir</a><a class="headerlink" href="#server-fs-rmdir" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">rmdir</span><span class="p">(</span><span class="n">dirname</span><span class="p">)</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">rmdir</span><span class="p">(</span><span class="n">dirname</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Deletes a directory. Returns <code class="docutils literal"><span class="pre">true,</span> <span class="pre">nil</span></code> on success or <code class="docutils literal"><span class="pre">false,</span> <span class="pre">errormsg</span></code>
+<p>Deletes a directory. Returns <code class="docutils literal notranslate"><span class="pre">true,</span> <span class="pre">nil</span></code> on success or <code class="docutils literal notranslate"><span class="pre">false,</span> <span class="pre">errormsg</span></code>
 on failure.</p>
 </div>
 <div class="section" id="server-fs-getcwd">
 <h3><a class="toc-backref" href="#id14">server.fs.getcwd</a><a class="headerlink" href="#server-fs-getcwd" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">curdir</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">getcwd</span><span class="p">()</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">curdir</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">getcwd</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>Gets the current working directory. Returns <code class="docutils literal"><span class="pre">true,</span> <span class="pre">current_dir</span></code> on success
-or <code class="docutils literal"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure.</p>
+<p>Gets the current working directory. Returns <code class="docutils literal notranslate"><span class="pre">true,</span> <span class="pre">current_dir</span></code> on success
+or <code class="docutils literal notranslate"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure.</p>
 </div>
 <div class="section" id="server-fs-chdir">
 <h3><a class="toc-backref" href="#id15">server.fs.chdir</a><a class="headerlink" href="#server-fs-chdir" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">oldir</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">newdir</span><span class="p">)</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">oldir</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">newdir</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Change working directory. Returns <code class="docutils literal"><span class="pre">true,</span> <span class="pre">olddir</span></code> on success or <code class="docutils literal"><span class="pre">false,</span>
+<p>Change working directory. Returns <code class="docutils literal notranslate"><span class="pre">true,</span> <span class="pre">olddir</span></code> on success or <code class="docutils literal notranslate"><span class="pre">false,</span>
 <span class="pre">errormsg</span></code> on failure.</p>
 </div>
 <div class="section" id="server-uuid">
 <h3><a class="toc-backref" href="#id16">server.uuid</a><a class="headerlink" href="#server-uuid" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">uuid</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">uuid</span><span class="p">()</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">uuid</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">uuid</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Generates a random UUID version 4 identifier in canonical form, as described
-in <a class="reference external" href="https://tools.ietf.org/html/rfc4122">RFC 4122</a>. Returns <code class="docutils literal"><span class="pre">true,</span> <span class="pre">uuid</span></code> on success or <code class="docutils literal"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on
+in <a class="reference external" href="https://tools.ietf.org/html/rfc4122">RFC 4122</a>. Returns <code class="docutils literal notranslate"><span class="pre">true,</span> <span class="pre">uuid</span></code> on success or <code class="docutils literal notranslate"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on
 failure.</p>
 </div>
 <div class="section" id="server-uuid62">
 <h3><a class="toc-backref" href="#id17">server.uuid62</a><a class="headerlink" href="#server-uuid62" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">uuid62</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">uuid62</span><span class="p">()</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">uuid62</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">uuid62</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>Generates a Base62-encoded UUID. Returns <code class="docutils literal"><span class="pre">true,</span> <span class="pre">uuid62</span></code> on success or
-<code class="docutils literal"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure.</p>
+<p>Generates a Base62-encoded UUID. Returns <code class="docutils literal notranslate"><span class="pre">true,</span> <span class="pre">uuid62</span></code> on success or
+<code class="docutils literal notranslate"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure.</p>
 </div>
 <div class="section" id="server-uuid-to-base62">
 <h3><a class="toc-backref" href="#id18">server.uuid_to_base62</a><a class="headerlink" href="#server-uuid-to-base62" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">uuid62</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">uuid_to_base62</span><span class="p">(</span><span class="n">uuid</span><span class="p">)</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">uuid62</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">uuid_to_base62</span><span class="p">(</span><span class="n">uuid</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Converts a canonical UUID string to a Base62-encoded UUID. Returns
-<code class="docutils literal"><span class="pre">true,</span> <span class="pre">uuid62</span></code> on success or <code class="docutils literal"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure.</p>
+<code class="docutils literal notranslate"><span class="pre">true,</span> <span class="pre">uuid62</span></code> on success or <code class="docutils literal notranslate"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure.</p>
 </div>
 <div class="section" id="server-base62-to-uuid">
 <h3><a class="toc-backref" href="#id19">server.base62_to_uuid</a><a class="headerlink" href="#server-base62-to-uuid" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">uuid</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">base62_to_uuid</span><span class="p">(</span><span class="n">uuid62</span><span class="p">)</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">uuid</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">base62_to_uuid</span><span class="p">(</span><span class="n">uuid62</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Converts a Base62-encoded UUID to canonical form. Returns <code class="docutils literal"><span class="pre">true,</span> <span class="pre">uuid</span></code> on
-success or <code class="docutils literal"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure.</p>
+<p>Converts a Base62-encoded UUID to canonical form. Returns <code class="docutils literal notranslate"><span class="pre">true,</span> <span class="pre">uuid</span></code> on
+success or <code class="docutils literal notranslate"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure.</p>
 </div>
 <div class="section" id="server-print">
 <h3><a class="toc-backref" href="#id20">server.print</a><a class="headerlink" href="#server-print" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Prints variables and/or strings to the HTTP connection. Returns <code class="docutils literal"><span class="pre">true,</span> <span class="pre">nil</span></code> on success or <code class="docutils literal"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure.</p>
+<p>Prints variables and/or strings to the HTTP connection. Returns <code class="docutils literal notranslate"><span class="pre">true,</span> <span class="pre">nil</span></code> on success or <code class="docutils literal notranslate"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure.</p>
 </div>
 <div class="section" id="server-http">
 <h3><a class="toc-backref" href="#id21">server.http</a><a class="headerlink" href="#server-http" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">http</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="s2">&quot;http://server.domain[:port]/path/file&quot;</span> <span class="p">[,</span> <span class="n">header</span><span class="p">]</span> <span class="p">[,</span> <span class="n">timeout</span><span class="p">])</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">http</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="s2">&quot;http://server.domain[:port]/path/file&quot;</span> <span class="p">[,</span> <span class="n">header</span><span class="p">]</span> <span class="p">[,</span> <span class="n">timeout</span><span class="p">])</span>
 </pre></div>
 </div>
 <p>Performs an HTTP request. Parameters:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">method</span></code>: The HTTP request method. Currently must be <code class="docutils literal"><span class="pre">&quot;GET&quot;</span></code>.</li>
-<li><code class="docutils literal"><span class="pre">url</span></code>: The HTTP URL.</li>
-<li><code class="docutils literal"><span class="pre">header</span></code>: An optional table of key-value pairs representing HTTP request headers.</li>
-<li><code class="docutils literal"><span class="pre">timeout</span></code>: An optional number of milliseconds until the connection times out.</li>
+<li><code class="docutils literal notranslate"><span class="pre">method</span></code>: The HTTP request method. Currently must be <code class="docutils literal notranslate"><span class="pre">&quot;GET&quot;</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">url</span></code>: The HTTP URL.</li>
+<li><code class="docutils literal notranslate"><span class="pre">header</span></code>: An optional table of key-value pairs representing HTTP request headers.</li>
+<li><code class="docutils literal notranslate"><span class="pre">timeout</span></code>: An optional number of milliseconds until the connection times out.</li>
 </ul>
 <p>Authentication is not yet supported.</p>
 <p>The result is a table:</p>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
     <span class="n">status_code</span> <span class="o">=</span> <span class="n">value</span> <span class="c1">-- HTTP status code returned</span>
     <span class="n">erromsg</span> <span class="o">=</span> <span class="s2">&quot;error description&quot;</span> <span class="c1">-- only if success is false</span>
     <span class="n">header</span> <span class="o">=</span> <span class="p">{</span>
@@ -344,7 +332,7 @@ success or <code class="docutils literal"><span class="pre">false,</span> <span 
 </pre></div>
 </div>
 <p>Example:</p>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">http</span><span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="s2">&quot;http://www.salsah.org/api/resources/1&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">http</span><span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="s2">&quot;http://www.salsah.org/api/resources/1&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 
 <span class="kr">if</span> <span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">success</span><span class="p">)</span> <span class="kr">then</span>
    <span class="n">server</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;&lt;table&gt;&quot;</span><span class="p">)</span>
@@ -368,82 +356,82 @@ success or <code class="docutils literal"><span class="pre">false,</span> <span 
 <dt>::</dt>
 <dd>success, jsonstr = server.table_to_json(table)</dd>
 </dl>
-<p>Converts a (nested) Lua table to a JSON string. Returns <code class="docutils literal"><span class="pre">true,</span> <span class="pre">jsonstr</span></code> on
-success or <code class="docutils literal"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure.</p>
+<p>Converts a (nested) Lua table to a JSON string. Returns <code class="docutils literal notranslate"><span class="pre">true,</span> <span class="pre">jsonstr</span></code> on
+success or <code class="docutils literal notranslate"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure.</p>
 </div>
 <div class="section" id="server-json-to-table">
 <h3><a class="toc-backref" href="#id23">server.json_to_table</a><a class="headerlink" href="#server-json-to-table" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">table</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">json_to_table</span><span class="p">(</span><span class="n">jsonstr</span><span class="p">)</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">table</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">json_to_table</span><span class="p">(</span><span class="n">jsonstr</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Converts a JSON string to a (nested) Lua table. Returns <code class="docutils literal"><span class="pre">true,</span> <span class="pre">table</span></code> on
-success or <code class="docutils literal"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure.</p>
+<p>Converts a JSON string to a (nested) Lua table. Returns <code class="docutils literal notranslate"><span class="pre">true,</span> <span class="pre">table</span></code> on
+success or <code class="docutils literal notranslate"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure.</p>
 </div>
 <div class="section" id="server-sendheader">
 <h3><a class="toc-backref" href="#id24">server.sendHeader</a><a class="headerlink" href="#server-sendheader" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">sendHeader</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">sendHeader</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Sets an HTTP response header. Returns <code class="docutils literal"><span class="pre">true,</span> <span class="pre">nil</span></code> on success or <code class="docutils literal"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure.</p>
+<p>Sets an HTTP response header. Returns <code class="docutils literal notranslate"><span class="pre">true,</span> <span class="pre">nil</span></code> on success or <code class="docutils literal notranslate"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure.</p>
 </div>
 <div class="section" id="server-sendcookie">
 <h3><a class="toc-backref" href="#id25">server.sendCookie</a><a class="headerlink" href="#server-sendcookie" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">sendCookie</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="p">[,</span> <span class="n">options</span><span class="o">-</span><span class="n">table</span><span class="p">])</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">sendCookie</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="p">[,</span> <span class="n">options</span><span class="o">-</span><span class="n">table</span><span class="p">])</span>
 </pre></div>
 </div>
-<p>Sets a cookie in the HTTP response. Returns <code class="docutils literal"><span class="pre">true,</span> <span class="pre">nil</span></code> on success or <code class="docutils literal"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure.
-The optional <code class="docutils literal"><span class="pre">options-table</span></code> is a Lua table containing the following keys:</p>
+<p>Sets a cookie in the HTTP response. Returns <code class="docutils literal notranslate"><span class="pre">true,</span> <span class="pre">nil</span></code> on success or <code class="docutils literal notranslate"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure.
+The optional <code class="docutils literal notranslate"><span class="pre">options-table</span></code> is a Lua table containing the following keys:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">path</span></code></li>
-<li><code class="docutils literal"><span class="pre">domain</span></code></li>
-<li><code class="docutils literal"><span class="pre">expires</span></code> (value in seconds)</li>
-<li><code class="docutils literal"><span class="pre">secure</span></code> (boolean)</li>
-<li><code class="docutils literal"><span class="pre">http_only</span></code> (boolean)</li>
+<li><code class="docutils literal notranslate"><span class="pre">path</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">domain</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">expires</span></code> (value in seconds)</li>
+<li><code class="docutils literal notranslate"><span class="pre">secure</span></code> (boolean)</li>
+<li><code class="docutils literal notranslate"><span class="pre">http_only</span></code> (boolean)</li>
 </ul>
 </div>
 <div class="section" id="server-sendstatus">
 <h3><a class="toc-backref" href="#id26">server.sendStatus</a><a class="headerlink" href="#server-sendstatus" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">server</span><span class="p">.</span><span class="n">sendStatus</span><span class="p">()</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">server</span><span class="p">.</span><span class="n">sendStatus</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Sends an HTTP status code. This function is always successful and returns nothing.</p>
 </div>
 <div class="section" id="server-generate-jwt">
 <h3><a class="toc-backref" href="#id27">server.generate_jwt</a><a class="headerlink" href="#server-generate-jwt" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">token</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">generate_jwt</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">token</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">generate_jwt</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Generates a <a class="reference external" href="https://jwt.io/">JSON Web Token</a> (JWT) with the table as payload. Returns <code class="docutils literal"><span class="pre">true,</span>
-<span class="pre">token</span></code> on success or <code class="docutils literal"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure. The table contains the
-JWT claims as follows. (The type <code class="docutils literal"><span class="pre">IntDate</span></code> is a number of seconds since
+<p>Generates a <a class="reference external" href="https://jwt.io/">JSON Web Token</a> (JWT) with the table as payload. Returns <code class="docutils literal notranslate"><span class="pre">true,</span>
+<span class="pre">token</span></code> on success or <code class="docutils literal notranslate"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure. The table contains the
+JWT claims as follows. (The type <code class="docutils literal notranslate"><span class="pre">IntDate</span></code> is a number of seconds since
 1970-01-01T0:0:0Z):</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">iss</span></code> (string =&gt; StringOrURI) OPT: principal that issued the JWT.</li>
-<li><code class="docutils literal"><span class="pre">exp</span></code> (number =&gt; IntDate) OPT: expiration time on or after which the token MUST NOT be accepted for processing.</li>
-<li><code class="docutils literal"><span class="pre">nbf</span></code>  (number =&gt; IntDate) OPT: identifies the time before which the token MUST NOT be accepted for processing.</li>
-<li><code class="docutils literal"><span class="pre">iat</span></code> (number =&gt; IntDate) OPT: identifies the time at which the JWT was issued.</li>
-<li><code class="docutils literal"><span class="pre">aud</span></code> (string =&gt; StringOrURI) OPT: identifies the audience that the JWT is intended for.
-The audience value is a string, typically the base address of the resource being accessed, such as <code class="docutils literal"><span class="pre">https://contoso.com</span></code>.</li>
-<li><code class="docutils literal"><span class="pre">prn</span></code> (string =&gt; StringOrURI) OPT: identifies the subject of the JWT.</li>
-<li><code class="docutils literal"><span class="pre">jti</span></code> (string =&gt; String) OPT: provides a unique identifier for the JWT.</li>
+<li><code class="docutils literal notranslate"><span class="pre">iss</span></code> (string =&gt; StringOrURI) OPT: principal that issued the JWT.</li>
+<li><code class="docutils literal notranslate"><span class="pre">exp</span></code> (number =&gt; IntDate) OPT: expiration time on or after which the token MUST NOT be accepted for processing.</li>
+<li><code class="docutils literal notranslate"><span class="pre">nbf</span></code>  (number =&gt; IntDate) OPT: identifies the time before which the token MUST NOT be accepted for processing.</li>
+<li><code class="docutils literal notranslate"><span class="pre">iat</span></code> (number =&gt; IntDate) OPT: identifies the time at which the JWT was issued.</li>
+<li><code class="docutils literal notranslate"><span class="pre">aud</span></code> (string =&gt; StringOrURI) OPT: identifies the audience that the JWT is intended for.
+The audience value is a string, typically the base address of the resource being accessed, such as <code class="docutils literal notranslate"><span class="pre">https://contoso.com</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">prn</span></code> (string =&gt; StringOrURI) OPT: identifies the subject of the JWT.</li>
+<li><code class="docutils literal notranslate"><span class="pre">jti</span></code> (string =&gt; String) OPT: provides a unique identifier for the JWT.</li>
 </ul>
 </div>
 <div class="section" id="server-decode-jwt">
 <h3><a class="toc-backref" href="#id28">server.decode_jwt</a><a class="headerlink" href="#server-decode-jwt" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">table</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">decode_jwt</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">table</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">decode_jwt</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Decodes a <a class="reference external" href="https://jwt.io/">JSON Web Token</a> (JWT) and returns its content as table. Returns
-<code class="docutils literal"><span class="pre">true,</span> <span class="pre">table</span></code> on success or <code class="docutils literal"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure.</p>
+<code class="docutils literal notranslate"><span class="pre">true,</span> <span class="pre">table</span></code> on success or <code class="docutils literal notranslate"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure.</p>
 </div>
 <div class="section" id="server-requireauth">
 <h3><a class="toc-backref" href="#id29">server.requireAuth</a><a class="headerlink" href="#server-requireauth" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">table</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">requireAuth</span><span class="p">()</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">table</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">requireAuth</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>Gets HTTP authentication data. Returns <code class="docutils literal"><span class="pre">true,</span> <span class="pre">table</span></code> on success or
-<code class="docutils literal"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure. The result is a table:</p>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="p">{</span>
+<p>Gets HTTP authentication data. Returns <code class="docutils literal notranslate"><span class="pre">true,</span> <span class="pre">table</span></code> on success or
+<code class="docutils literal notranslate"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on failure. The result is a table:</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
     <span class="n">status</span> <span class="o">=</span> <span class="n">string</span> <span class="c1">-- &quot;BASIC&quot; | &quot;BEARER&quot; | &quot;NOAUTH&quot; (no authorization header) | &quot;ERROR&quot;</span>
     <span class="n">username</span> <span class="o">=</span> <span class="n">string</span> <span class="c1">-- only if status = &quot;BASIC&quot;</span>
     <span class="n">password</span> <span class="o">=</span> <span class="n">string</span> <span class="c1">-- only if status = &quot;BASIC&quot;</span>
@@ -453,7 +441,7 @@ The audience value is a string, typically the base address of the resource being
 </pre></div>
 </div>
 <p>Example:</p>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">auth</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">requireAuth</span><span class="p">()</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">auth</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">requireAuth</span><span class="p">()</span>
 <span class="kr">if</span> <span class="ow">not</span> <span class="n">success</span> <span class="kr">then</span>
     <span class="n">server</span><span class="p">.</span><span class="n">sendStatus</span><span class="p">(</span><span class="mi">501</span><span class="p">)</span>
     <span class="n">server</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;Error in getting authentication scheme!&quot;</span><span class="p">)</span>
@@ -515,55 +503,55 @@ The audience value is a string, typically the base address of the resource being
 </div>
 <div class="section" id="server-copytmpfile">
 <h3><a class="toc-backref" href="#id30">server.copyTmpfile</a><a class="headerlink" href="#server-copytmpfile" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">copyTmpfile</span><span class="p">()</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">copyTmpfile</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Sipi saves each uploaded file in a temporary location (given by the config
-variable <code class="docutils literal"><span class="pre">tmpdir</span></code>) and deletes it after the request has been served. This
+variable <code class="docutils literal notranslate"><span class="pre">tmpdir</span></code>) and deletes it after the request has been served. This
 function is used to copy the file to another location where it can be
-retrieved later. Returns <code class="docutils literal"><span class="pre">true,</span> <span class="pre">nil</span></code> on success or <code class="docutils literal"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on
+retrieved later. Returns <code class="docutils literal notranslate"><span class="pre">true,</span> <span class="pre">nil</span></code> on success or <code class="docutils literal notranslate"><span class="pre">false,</span> <span class="pre">errormsg</span></code> on
 failure.</p>
 </div>
 <div class="section" id="server-log">
 <h3><a class="toc-backref" href="#id31">server.log</a><a class="headerlink" href="#server-log" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">server</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">loglevel</span><span class="p">)</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">server</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">loglevel</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Writes a message to <a class="reference external" href="http://man7.org/linux/man-pages/man3/syslog.3.html">syslog</a>. Severity levels are:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">server.loglevel.LOG_EMERG</span></code></li>
-<li><code class="docutils literal"><span class="pre">server.loglevel.LOG_ALERT</span></code></li>
-<li><code class="docutils literal"><span class="pre">server.loglevel.LOG_CRIT</span></code></li>
-<li><code class="docutils literal"><span class="pre">server.loglevel.LOG_ERR</span></code></li>
-<li><code class="docutils literal"><span class="pre">server.loglevel.LOG_WARNING</span></code></li>
-<li><code class="docutils literal"><span class="pre">server.loglevel.LOG_NOTICE</span></code></li>
-<li><code class="docutils literal"><span class="pre">server.loglevel.LOG_INFO</span></code></li>
-<li><code class="docutils literal"><span class="pre">server.loglevel.LOG_DEBUG</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">server.loglevel.LOG_EMERG</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">server.loglevel.LOG_ALERT</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">server.loglevel.LOG_CRIT</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">server.loglevel.LOG_ERR</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">server.loglevel.LOG_WARNING</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">server.loglevel.LOG_NOTICE</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">server.loglevel.LOG_INFO</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">server.loglevel.LOG_DEBUG</span></code></li>
 </ul>
 </div>
 </div>
 <div class="section" id="sipi-variables-available-to-lua-scripts">
 <h2><a class="toc-backref" href="#id32">Sipi Variables Available to Lua Scripts</a><a class="headerlink" href="#sipi-variables-available-to-lua-scripts" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">server.has_openssl</span></code>: <code class="docutils literal"><span class="pre">true</span></code> if OpenSSL is available.</li>
-<li><code class="docutils literal"><span class="pre">server.secure</span></code>: <code class="docutils literal"><span class="pre">true</span></code> if the connection was made over HTTPS.</li>
-<li><code class="docutils literal"><span class="pre">server.host</span></code>: the hostname of the Sipi server that was used in the request.</li>
-<li><code class="docutils literal"><span class="pre">server.client_ip</span></code>: the IPv4 or IPv6 address of the client connecting to Sipi.</li>
-<li><code class="docutils literal"><span class="pre">server.client_port</span></code>: the port number of the client socket.</li>
-<li><code class="docutils literal"><span class="pre">server.uri</span></code>: the URL path used to access Sipi (does not include the hostname).</li>
-<li><code class="docutils literal"><span class="pre">server.header</span></code>: a table containing all the HTTP request headers (in lowercase).</li>
-<li><code class="docutils literal"><span class="pre">server.cookies</span></code>: a table of the cookies that were sent with the request.</li>
-<li><code class="docutils literal"><span class="pre">server.get</span></code>: a table of GET request parameters.</li>
-<li><code class="docutils literal"><span class="pre">server.post</span></code>: a table of POST request parameters.</li>
-<li><code class="docutils literal"><span class="pre">server.request</span></code>: all request parameters.</li>
+<li><code class="docutils literal notranslate"><span class="pre">server.has_openssl</span></code>: <code class="docutils literal notranslate"><span class="pre">true</span></code> if OpenSSL is available.</li>
+<li><code class="docutils literal notranslate"><span class="pre">server.secure</span></code>: <code class="docutils literal notranslate"><span class="pre">true</span></code> if the connection was made over HTTPS.</li>
+<li><code class="docutils literal notranslate"><span class="pre">server.host</span></code>: the hostname of the Sipi server that was used in the request.</li>
+<li><code class="docutils literal notranslate"><span class="pre">server.client_ip</span></code>: the IPv4 or IPv6 address of the client connecting to Sipi.</li>
+<li><code class="docutils literal notranslate"><span class="pre">server.client_port</span></code>: the port number of the client socket.</li>
+<li><code class="docutils literal notranslate"><span class="pre">server.uri</span></code>: the URL path used to access Sipi (does not include the hostname).</li>
+<li><code class="docutils literal notranslate"><span class="pre">server.header</span></code>: a table containing all the HTTP request headers (in lowercase).</li>
+<li><code class="docutils literal notranslate"><span class="pre">server.cookies</span></code>: a table of the cookies that were sent with the request.</li>
+<li><code class="docutils literal notranslate"><span class="pre">server.get</span></code>: a table of GET request parameters.</li>
+<li><code class="docutils literal notranslate"><span class="pre">server.post</span></code>: a table of POST request parameters.</li>
+<li><code class="docutils literal notranslate"><span class="pre">server.request</span></code>: all request parameters.</li>
 <li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">server.uploads</span></code>: an array of upload parameters, one per file. Each one is a table containing:</dt>
+<dt><code class="docutils literal notranslate"><span class="pre">server.uploads</span></code>: an array of upload parameters, one per file. Each one is a table containing:</dt>
 <dd><ul class="first last">
-<li><code class="docutils literal"><span class="pre">fieldname</span></code>: the name of the form field.</li>
-<li><code class="docutils literal"><span class="pre">origname</span></code>: the original filename.</li>
-<li><code class="docutils literal"><span class="pre">tmpname</span></code>: a temporary path to the uploaded file.</li>
-<li><code class="docutils literal"><span class="pre">mimetype</span></code>: the MIME type of the uploaded file as provided by the browser.</li>
-<li><code class="docutils literal"><span class="pre">filesize</span></code>: the size of uploaded file in bytes.</li>
+<li><code class="docutils literal notranslate"><span class="pre">fieldname</span></code>: the name of the form field.</li>
+<li><code class="docutils literal notranslate"><span class="pre">origname</span></code>: the original filename.</li>
+<li><code class="docutils literal notranslate"><span class="pre">tmpname</span></code>: a temporary path to the uploaded file.</li>
+<li><code class="docutils literal notranslate"><span class="pre">mimetype</span></code>: the MIME type of the uploaded file as provided by the browser.</li>
+<li><code class="docutils literal notranslate"><span class="pre">filesize</span></code>: the size of uploaded file in bytes.</li>
 </ul>
 </dd>
 </dl>
@@ -574,15 +562,15 @@ failure.</p>
 <h2><a class="toc-backref" href="#id33">Lua helper functions</a><a class="headerlink" href="#lua-helper-functions" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="helper-filename-hash">
 <h3><a class="toc-backref" href="#id34">helper.filename_hash</a><a class="headerlink" href="#helper-filename-hash" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">filepath</span> <span class="o">=</span> <span class="n">helper</span><span class="p">.</span><span class="n">filename_hash</span><span class="p">(</span><span class="n">fileid</span><span class="p">)</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">filepath</span> <span class="o">=</span> <span class="n">helper</span><span class="p">.</span><span class="n">filename_hash</span><span class="p">(</span><span class="n">fileid</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>if <code class="docutils literal"><span class="pre">subdir_levels``(see</span> <span class="pre">configuration</span> <span class="pre">file)</span> <span class="pre">is</span> <span class="pre">&gt;</span> <span class="pre">0,</span> <span class="pre">recursive</span> <span class="pre">subdirectories</span> <span class="pre">named</span>
+<p>if <code class="docutils literal notranslate"><span class="pre">subdir_levels``(see</span> <span class="pre">configuration</span> <span class="pre">file)</span> <span class="pre">is</span> <span class="pre">&gt;</span> <span class="pre">0,</span> <span class="pre">recursive</span> <span class="pre">subdirectories</span> <span class="pre">named</span>
 <span class="pre">'A',</span> <span class="pre">'B',..,</span> <span class="pre">'Z'</span> <span class="pre">are</span> <span class="pre">used</span> <span class="pre">to</span> <span class="pre">split</span> <span class="pre">the</span> <span class="pre">image</span> <span class="pre">files</span> <span class="pre">across</span> <span class="pre">multiple</span> <span class="pre">directories.</span> <span class="pre">A</span> <span class="pre">simple</span>
 <span class="pre">hash-algorithm</span> <span class="pre">is</span> <span class="pre">being</span> <span class="pre">used.</span> <span class="pre">This</span> <span class="pre">function</span> <span class="pre">returns</span> <span class="pre">a</span> <span class="pre">filepath</span> <span class="pre">with</span> <span class="pre">the</span> <span class="pre">subdirectories</span>
-<span class="pre">prepended,</span> <span class="pre">e.g</span> <span class="pre">`gaga.jp2</span></code> becomes <code class="docutils literal"><span class="pre">C/W/gaga.jpg</span></code></p>
+<span class="pre">prepended,</span> <span class="pre">e.g</span> <span class="pre">`gaga.jp2</span></code> becomes <code class="docutils literal notranslate"><span class="pre">C/W/gaga.jpg</span></code></p>
 <p>Example:</p>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">newfilepath</span> <span class="o">=</span> <span class="n">helper</span><span class="p">.</span><span class="n">filename_hash</span><span class="p">(</span><span class="n">newfilename</span><span class="p">[</span><span class="n">imgindex</span><span class="p">]);</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">newfilepath</span> <span class="o">=</span> <span class="n">helper</span><span class="p">.</span><span class="n">filename_hash</span><span class="p">(</span><span class="n">newfilename</span><span class="p">[</span><span class="n">imgindex</span><span class="p">]);</span>
 <span class="kr">if</span> <span class="ow">not</span> <span class="n">success</span> <span class="kr">then</span>
     <span class="n">server</span><span class="p">.</span><span class="n">sendStatus</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
     <span class="n">server</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">gaga</span><span class="p">,</span> <span class="n">server</span><span class="p">.</span><span class="n">loglevel</span><span class="p">.</span><span class="nb">error</span><span class="p">)</span>
@@ -600,11 +588,11 @@ failure.</p>
 <div class="section" id="sipiimage-new-filename">
 <h3><a class="toc-backref" href="#id36">SipiImage.new(filename)</a><a class="headerlink" href="#sipiimage-new-filename" title="Permalink to this headline">¶</a></h3>
 <p>The simple form is:</p>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">SipiImage</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;filename&quot;</span><span class="p">)</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">SipiImage</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;filename&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The more complex form is as follows:</p>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">SipiImage</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;filename&quot;</span><span class="p">,</span> <span class="p">{</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">SipiImage</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;filename&quot;</span><span class="p">,</span> <span class="p">{</span>
         <span class="n">region</span><span class="o">=&lt;</span><span class="n">iiif</span><span class="o">-</span><span class="n">region</span><span class="o">-</span><span class="n">string</span><span class="o">&gt;</span><span class="p">,</span>
         <span class="n">size</span><span class="o">=&lt;</span><span class="n">iiif</span><span class="o">-</span><span class="n">size</span><span class="o">-</span><span class="n">string</span><span class="o">&gt;</span><span class="p">,</span>
         <span class="n">reduce</span><span class="o">=&lt;</span><span class="n">integer</span><span class="o">&gt;</span><span class="p">,</span>
@@ -615,12 +603,12 @@ failure.</p>
 </div>
 <p>This creates a new Lua image object and loads the given image into. The second form
 allows to indicate a region, the size or a reduce factor and the original filename.
-The <code class="docutils literal"><span class="pre">hash</span></code> parameter indicates that the given checksum should be calculated out of the
+The <code class="docutils literal notranslate"><span class="pre">hash</span></code> parameter indicates that the given checksum should be calculated out of the
 pixel values and written into the header.</p>
 </div>
 <div class="section" id="sipiimage-dims">
 <h3><a class="toc-backref" href="#id37">SipiImage.dims()</a><a class="headerlink" href="#sipiimage-dims" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">dims</span> <span class="o">=</span> <span class="n">img</span><span class="p">.</span><span class="n">dims</span><span class="p">()</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">dims</span> <span class="o">=</span> <span class="n">img</span><span class="p">.</span><span class="n">dims</span><span class="p">()</span>
 <span class="kr">if</span> <span class="n">success</span> <span class="kr">then</span>
     <span class="n">server</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s1">&#39;nx=&#39;</span><span class="p">,</span> <span class="n">dims</span><span class="p">.</span><span class="n">nx</span><span class="p">,</span> <span class="s1">&#39; ny=&#39;</span><span class="p">,</span> <span class="n">dims</span><span class="p">.</span><span class="n">ny</span><span class="p">)</span>
 <span class="kr">end</span>
@@ -630,7 +618,7 @@ pixel values and written into the header.</p>
 </div>
 <div class="section" id="sipiimage-crop-iiif-region-string">
 <h3><a class="toc-backref" href="#id38">SipiImage.crop(&lt;iiif-region-string&gt;)</a><a class="headerlink" href="#sipiimage-crop-iiif-region-string" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">img</span><span class="p">.</span><span class="n">crop</span><span class="p">(</span><span class="o">&lt;</span><span class="n">IIIF</span><span class="o">-</span><span class="n">region</span><span class="o">-</span><span class="n">string</span><span class="o">&gt;</span><span class="p">)</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">img</span><span class="p">.</span><span class="n">crop</span><span class="p">(</span><span class="o">&lt;</span><span class="n">IIIF</span><span class="o">-</span><span class="n">region</span><span class="o">-</span><span class="n">string</span><span class="o">&gt;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Crops the image to the given rectangular region. The parameter must be a valid
@@ -638,14 +626,14 @@ IIIF-region string.</p>
 </div>
 <div class="section" id="sipiimage-scale-iiif-size-string">
 <h3><a class="toc-backref" href="#id39">SipiImage.scale(&lt;iiif-size-string&gt;)</a><a class="headerlink" href="#sipiimage-scale-iiif-size-string" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">img</span><span class="p">.</span><span class="n">scale</span><span class="p">(</span><span class="o">&lt;</span><span class="n">iiif</span><span class="o">-</span><span class="n">size</span><span class="o">-</span><span class="n">string</span><span class="o">&gt;</span><span class="p">)</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">img</span><span class="p">.</span><span class="n">scale</span><span class="p">(</span><span class="o">&lt;</span><span class="n">iiif</span><span class="o">-</span><span class="n">size</span><span class="o">-</span><span class="n">string</span><span class="o">&gt;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Resizes the image to the given size as iiif-conformant size string.</p>
 </div>
 <div class="section" id="sipiimage-rotate-iiif-rotation-string">
 <h3><a class="toc-backref" href="#id40">SipiImage.rotate(&lt;iiif-rotation-string&gt;)</a><a class="headerlink" href="#sipiimage-rotate-iiif-rotation-string" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span>       <span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">img</span><span class="p">.</span><span class="n">rotate</span><span class="p">(</span><span class="o">&lt;</span><span class="n">iiif</span><span class="o">-</span><span class="n">rotation</span><span class="o">-</span><span class="n">string</span><span class="o">&gt;</span><span class="p">)</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span>       <span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">img</span><span class="p">.</span><span class="n">rotate</span><span class="p">(</span><span class="o">&lt;</span><span class="n">iiif</span><span class="o">-</span><span class="n">rotation</span><span class="o">-</span><span class="n">string</span><span class="o">&gt;</span><span class="p">)</span>
 
 <span class="n">Rotates</span> <span class="ow">and</span><span class="o">/</span><span class="ow">or</span> <span class="n">mirrors</span> <span class="n">the</span> <span class="n">image</span> <span class="n">according</span> <span class="n">the</span> <span class="n">given</span> <span class="n">iiif</span><span class="o">-</span><span class="n">conformant</span> <span class="n">rotation</span> <span class="n">string</span><span class="p">.</span>
 </pre></div>
@@ -653,7 +641,7 @@ IIIF-region string.</p>
 </div>
 <div class="section" id="sipiimage-watermark-wm-file-path">
 <h3><a class="toc-backref" href="#id41">SipiImage.watermark(&lt;wm-file-path&gt;)</a><a class="headerlink" href="#sipiimage-watermark-wm-file-path" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">img</span><span class="p">.</span><span class="n">watermark</span><span class="p">(</span><span class="o">&lt;</span><span class="n">wm</span><span class="o">-</span><span class="n">file</span><span class="o">-</span><span class="n">path</span><span class="o">&gt;</span><span class="p">)</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">img</span><span class="p">.</span><span class="n">watermark</span><span class="p">(</span><span class="o">&lt;</span><span class="n">wm</span><span class="o">-</span><span class="n">file</span><span class="o">-</span><span class="n">path</span><span class="o">&gt;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Applies the given watermark file to the image. The watermark file must be a bitonal
@@ -661,7 +649,7 @@ TIFF file.</p>
 </div>
 <div class="section" id="sipiimage-write-filepath">
 <h3><a class="toc-backref" href="#id42">SipiImage.write(&lt;filepath&gt;)</a><a class="headerlink" href="#sipiimage-write-filepath" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">img</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="o">&lt;</span><span class="n">filepath</span><span class="o">&gt;</span><span class="p">)</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">img</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="o">&lt;</span><span class="n">filepath</span><span class="o">&gt;</span><span class="p">)</span>
 
 <span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">img</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;HTTP.jpg&#39;</span><span class="p">)</span>
 </pre></div>
@@ -669,39 +657,39 @@ TIFF file.</p>
 <p>The first version write the image to a file, the second writes the file to the HTTP connection.
 The file format is determined by the extension:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">jpg</span></code> : writes a JPEG file</li>
-<li><code class="docutils literal"><span class="pre">tif</span></code> : writes a TIFF file</li>
-<li><code class="docutils literal"><span class="pre">png</span></code> : writes a png file</li>
-<li><code class="docutils literal"><span class="pre">jpx</span></code> : writes a JPGE2000 file</li>
+<li><code class="docutils literal notranslate"><span class="pre">jpg</span></code> : writes a JPEG file</li>
+<li><code class="docutils literal notranslate"><span class="pre">tif</span></code> : writes a TIFF file</li>
+<li><code class="docutils literal notranslate"><span class="pre">png</span></code> : writes a png file</li>
+<li><code class="docutils literal notranslate"><span class="pre">jpx</span></code> : writes a JPGE2000 file</li>
 </ul>
 </div>
 <div class="section" id="sipiimage-send-format">
 <h3><a class="toc-backref" href="#id43">SipiImage.send(&lt;format&gt;)</a><a class="headerlink" href="#sipiimage-send-format" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">img</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="o">&lt;</span><span class="n">format</span><span class="o">&gt;</span><span class="p">)</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">success</span><span class="p">,</span> <span class="n">errormsg</span> <span class="o">=</span> <span class="n">img</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="o">&lt;</span><span class="n">format</span><span class="o">&gt;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Sends the file to the HTTP connection. As format are allowed:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">jpg</span></code> : writes a JPEG file</li>
-<li><code class="docutils literal"><span class="pre">tif</span></code> : writes a TIFF file</li>
-<li><code class="docutils literal"><span class="pre">png</span></code> : writes a png file</li>
-<li><code class="docutils literal"><span class="pre">jpx</span></code> : writes a JPGE2000 file</li>
+<li><code class="docutils literal notranslate"><span class="pre">jpg</span></code> : writes a JPEG file</li>
+<li><code class="docutils literal notranslate"><span class="pre">tif</span></code> : writes a TIFF file</li>
+<li><code class="docutils literal notranslate"><span class="pre">png</span></code> : writes a png file</li>
+<li><code class="docutils literal notranslate"><span class="pre">jpx</span></code> : writes a JPGE2000 file</li>
 </ul>
 </div>
 </div>
 <div class="section" id="installing-lua-modules">
 <h2><a class="toc-backref" href="#id44">Installing Lua modules</a><a class="headerlink" href="#installing-lua-modules" title="Permalink to this headline">¶</a></h2>
 <p>To install Lua modules that can be used in Lua scripts, use
-<code class="docutils literal"><span class="pre">local/bin/luarocks</span></code>. Make sure that the location where the modules
+<code class="docutils literal notranslate"><span class="pre">local/bin/luarocks</span></code>. Make sure that the location where the modules
 are stored is in the Lua package path, which is printed by <cite>local/bin/lurocks path</cite>.
 The Lua paths will be used by the Lua interpreter when loading modules in a script
-with <code class="docutils literal"><span class="pre">require</span></code> (see <a class="reference external" href="http://leafo.net/guides/customizing-the-luarocks-tree.html">Using LuaRocks to install packages in the current directory</a>).</p>
-<p>For example, using <code class="docutils literal"><span class="pre">local/bin/luarocks</span> <span class="pre">install</span> <span class="pre">--local</span> <span class="pre">package</span></code>, the package
-will be installed in <code class="docutils literal"><span class="pre">~/.luarocks/</span></code>. To include this path in the Lua&#8217;s
+with <code class="docutils literal notranslate"><span class="pre">require</span></code> (see <a class="reference external" href="http://leafo.net/guides/customizing-the-luarocks-tree.html">Using LuaRocks to install packages in the current directory</a>).</p>
+<p>For example, using <code class="docutils literal notranslate"><span class="pre">local/bin/luarocks</span> <span class="pre">install</span> <span class="pre">--local</span> <span class="pre">package</span></code>, the package
+will be installed in <code class="docutils literal notranslate"><span class="pre">~/.luarocks/</span></code>. To include this path in the Lua’s
 interpreter package search path, you can use an environment variable. Running
-<code class="docutils literal"><span class="pre">local/bin/luarocks</span> <span class="pre">path</span></code> outputs the code you can use to do so.
+<code class="docutils literal notranslate"><span class="pre">local/bin/luarocks</span> <span class="pre">path</span></code> outputs the code you can use to do so.
 Alternatively, you can build the package path at the beginning of a Lua file
-by setting <code class="docutils literal"><span class="pre">package.path</span></code> and <code class="docutils literal"><span class="pre">package.cpath</span></code>
+by setting <code class="docutils literal notranslate"><span class="pre">package.path</span></code> and <code class="docutils literal notranslate"><span class="pre">package.cpath</span></code>
 (see <a class="reference external" href="http://leafo.net/guides/customizing-the-luarocks-tree.html#the-install-locations/using-a-custom-directory/quick-guide/running-scripts-with-packages">Running scripts with packages</a>).</p>
 </div>
 <div class="section" id="using-sqlite-in-lua-scripts">
@@ -710,39 +698,39 @@ by setting <code class="docutils literal"><span class="pre">package.path</span><
 should use <a class="reference external" href="https://www.lua.org/pil/8.4.html">pcall</a> to handle errors that may be returned by SQLite.</p>
 <div class="section" id="opening-an-sqlite-database">
 <h3><a class="toc-backref" href="#id46">Opening an SQLite Database</a><a class="headerlink" href="#opening-an-sqlite-database" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">db</span> <span class="o">=</span> <span class="n">sqlite</span><span class="p">(</span><span class="s1">&#39;db/test.db&#39;</span><span class="p">,</span> <span class="s1">&#39;RW&#39;</span><span class="p">)</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">db</span> <span class="o">=</span> <span class="n">sqlite</span><span class="p">(</span><span class="s1">&#39;db/test.db&#39;</span><span class="p">,</span> <span class="s1">&#39;RW&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>This creates a new opaque database object. The first parameter is the path to
-the database file. The second parameter may be <code class="docutils literal"><span class="pre">'RO'</span></code> for read-only access,
-<code class="docutils literal"><span class="pre">'RW'</span></code> for read-write access, or <code class="docutils literal"><span class="pre">'CRW'</span></code> for read-write access. If the
+the database file. The second parameter may be <code class="docutils literal notranslate"><span class="pre">'RO'</span></code> for read-only access,
+<code class="docutils literal notranslate"><span class="pre">'RW'</span></code> for read-write access, or <code class="docutils literal notranslate"><span class="pre">'CRW'</span></code> for read-write access. If the
 database file does not exist, it will be created using this option.</p>
 <p>To destroy the database object and free all resources, you can do this:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>db = ~db
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>db = ~db
 </pre></div>
 </div>
-<p>However, Lua&#8217;s garbage collection will destroy the database object and free
+<p>However, Lua’s garbage collection will destroy the database object and free
 all resources when they are no longer used.</p>
 </div>
 <div class="section" id="preparing-a-query">
 <h3><a class="toc-backref" href="#id47">Preparing a Query</a><a class="headerlink" href="#preparing-a-query" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">qry</span> <span class="o">=</span> <span class="n">db</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;SELECT * FROM image&#39;</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">qry</span> <span class="o">=</span> <span class="n">db</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;SELECT * FROM image&#39;</span>
 </pre></div>
 </div>
 <p>Or, if you want to use a prepared query statement:</p>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">qry</span> <span class="o">=</span> <span class="n">db</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;INSERT INTO image (id, description) VALUES (?,?)&#39;</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">qry</span> <span class="o">=</span> <span class="n">db</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;INSERT INTO image (id, description) VALUES (?,?)&#39;</span>
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">qry</span></code> will then be a query object containing a prepared query. If the
+<p><code class="docutils literal notranslate"><span class="pre">qry</span></code> will then be a query object containing a prepared query. If the
 query object is not needed anymore, it may be destroyed:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>qry = ~qry
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>qry = ~qry
 </pre></div>
 </div>
 <p>Query objects should be destroyed explicitly if not needed any longer.</p>
 </div>
 <div class="section" id="executing-a-query">
 <h3><a class="toc-backref" href="#id48">Executing a Query</a><a class="headerlink" href="#executing-a-query" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">row</span> <span class="o">=</span> <span class="n">qry</span><span class="p">()</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">row</span> <span class="o">=</span> <span class="n">qry</span><span class="p">()</span>
 <span class="kr">while</span> <span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="kr">do</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39; -&gt; &#39;</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
     <span class="n">row</span> <span class="o">=</span> <span class="n">qry</span><span class="p">()</span>
@@ -750,7 +738,7 @@ query object is not needed anymore, it may be destroyed:</p>
 </pre></div>
 </div>
 <p>Or with a prepared statement:</p>
-<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">qry</span><span class="p">(</span><span class="s1">&#39;SGV_1960_00315&#39;</span><span class="p">,</span> <span class="s1">&#39;This is an image of a steam engine...&#39;</span><span class="p">)</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">qry</span><span class="p">(</span><span class="s1">&#39;SGV_1960_00315&#39;</span><span class="p">,</span> <span class="s1">&#39;This is an image of a steam engine...&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The second way is used for prepared queries that contain parameters.</p>
@@ -821,7 +809,7 @@ query object is not needed anymore, it may be destroyed:</p>
           
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017-2018, Lukas Rosenthaler, Andrea Bianco, Benjamin Geer, Tobias Schweizer, Ivan Subotic.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
     </div>
         </div>
         <div class="clearer"></div>

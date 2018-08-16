@@ -1,43 +1,31 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>v1.3.0 Release Notes (not released yet) &#8212; Sipi v1.2.0 documentation</title>
-    
+    <title>v1.3.0 Release Notes &#8212; Sipi v1.4.0 documentation</title>
     <link rel="stylesheet" href="../_static/agogo.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     'v1.2.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Overview" href="../overview.html" />
+    <link rel="next" title="v1.4.0 Release Notes" href="v1.4.0.html" />
     <link rel="prev" title="v1.2.0 Release Notes" href="v1.2.0.html" /> 
-  </head>
-  <body role="document">
+  </head><body>
     <div class="header-wrapper" role="banner">
       <div class="header">
         <div class="headertitle"><a
-          href="../index.html">Sipi v1.2.0 documentation</a></div>
+          href="../index.html">Sipi v1.4.0 documentation</a></div>
         <div class="rel" role="navigation" aria-label="related navigation">
           <a href="v1.2.0.html" title="v1.2.0 Release Notes"
              accesskey="P">previous</a> |
-          <a href="../overview.html" title="Overview"
+          <a href="v1.4.0.html" title="v1.4.0 Release Notes"
              accesskey="N">next</a> |
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a>
@@ -53,14 +41,25 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="v1-3-0-release-notes-not-released-yet">
-<h1>v1.3.0 Release Notes (not released yet)<a class="headerlink" href="#v1-3-0-release-notes-not-released-yet" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="v1-3-0-release-notes">
+<h1>v1.3.0 Release Notes<a class="headerlink" href="#v1-3-0-release-notes" title="Permalink to this headline">¶</a></h1>
 <p>See the <a class="reference external" href="https://github.com/dhlab-basel/Sipi/releases/tag/v1.3.0">release</a> on Github.</p>
 <div class="section" id="new-features">
 <h2>New features:<a class="headerlink" href="#new-features" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Added latest kakadu version v7_A_4-01727L.zip</li>
+<li>support for CIELab for both 8- and 16-bit images</li>
+<li>try/catch for ICC profiles that are not supported by kakadu. These profiles are added to the “essential metadata” in order to be reinstated if the JPX is converted back to a TIFF or JPEG.</li>
+<li>added more unit tests</li>
+</ul>
 </div>
 <div class="section" id="bugfixes">
 <h2>Bugfixes:<a class="headerlink" href="#bugfixes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>16 Bit PNG images are now teated correctly by byteswapping of the data (htons), since PNG uses network byte order which is usually noit zthe host byte order on intel processors</li>
+<li>alpha channels are treated correctly with JPEG2000</li>
+<li>The parameter names in a multidata/form-data POST request now have the double quotes removed</li>
+</ul>
 </div>
 </div>
 
@@ -74,7 +73,9 @@
           <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Release Notes</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="v1.2.0.html">v1.2.0 Release Notes</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">v1.3.0 Release Notes (not released yet)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">v1.3.0 Release Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="v1.4.0.html">v1.4.0 Release Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="v1.5.0.html">v1.5.0 Release Notes (not released yet)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
@@ -104,7 +105,7 @@
           <div role="navigation" aria-label="related navigaton">
             <a href="v1.2.0.html" title="v1.2.0 Release Notes"
               >previous</a> |
-            <a href="../overview.html" title="Overview"
+            <a href="v1.4.0.html" title="v1.4.0 Release Notes"
               >next</a> |
             <a href="../genindex.html" title="General Index"
               >index</a>
@@ -120,7 +121,7 @@
           
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017-2018, Lukas Rosenthaler, Andrea Bianco, Benjamin Geer, Tobias Schweizer, Ivan Subotic.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
     </div>
         </div>
         <div class="clearer"></div>

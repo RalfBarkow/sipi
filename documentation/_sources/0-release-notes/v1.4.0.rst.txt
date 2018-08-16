@@ -26,7 +26,7 @@
 
 
 ********************
-v1.3.0 Release Notes
+v1.4.0 Release Notes
 ********************
 
 See the `release`_ on Github.
@@ -47,4 +47,4 @@ Bugfixes:
 - alpha channels are treated correctly with JPEG2000
 - The parameter names in a multidata/form-data POST request now have the double quotes removed
 
-.. _release: https://github.com/dhlab-basel/Sipi/releases/tag/v1.3.0
+.. _release: https://github.com/dhlab-basel/Sipi/releases/tag/v1.4.0
