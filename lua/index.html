@@ -94,7 +94,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href=".." title="SIPI Documentation" class="md-header-nav__button md-logo">
+        <a href="../0-release-notes/" title="SIPI Documentation" class="md-header-nav__button md-logo">
           
             <img src="../assets/images/dasch-icon-white.svg" width="24" height="24">
           
@@ -164,7 +164,7 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href=".." title="SIPI Documentation" class="md-nav__button md-logo">
+    <a href="../0-release-notes/" title="SIPI Documentation" class="md-nav__button md-logo">
       
         <img src="../assets/images/dasch-icon-white.svg" width="48" height="48">
       
@@ -180,8 +180,8 @@
 
 
   <li class="md-nav__item">
-    <a href=".." title="Overview" class="md-nav__link">
-      Overview
+    <a href="../introduction/" title="Introduction" class="md-nav__link">
+      Introduction
     </a>
   </li>
 
@@ -192,20 +192,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../building/" title="Building" class="md-nav__link">
-      Building
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../running/" title="Running" class="md-nav__link">
-      Running
+    <a href="../sipi/" title="Basic information and Reference" class="md-nav__link">
+      Basic information and Reference
     </a>
   </li>
 
@@ -475,6 +463,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#serverfile95mimeconsistency" class="md-nav__link">
+    server.file_mimeconsistency
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#serverrequireauth" class="md-nav__link">
     server.requireAuth
   </a>
@@ -645,6 +640,30 @@
   
 </nav>
     
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../building/" title="Building" class="md-nav__link">
+      Building
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../running/" title="Running" class="md-nav__link">
+      Running
+    </a>
   </li>
 
     
@@ -920,6 +939,13 @@
           <li class="md-nav__item">
   <a href="#serverfile95mimetype" class="md-nav__link">
     server.file_mimetype
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#serverfile95mimeconsistency" class="md-nav__link">
+    server.file_mimeconsistency
   </a>
   
 </li>
@@ -1392,6 +1418,16 @@ success, table = server.file_mimetype(index)
 path is known. The second form can be used for uploads by passing the
 file index. It returns <code>true, table</code> on success or <code>false, errormsg</code> on
 failure. The table has 2 members: - <code>mimetype</code> - <code>charset</code></p>
+<h3 id="serverfile95mimeconsistency">server.file_mimeconsistency</h3>
+<pre><code>success, is_consistent = server.file_mimeconsistency(path)
+success, is_consistent = server.file_mimeconsistency(index)
+</code></pre>
+<p>Checks if the file extension and the mimetype determined by the magic
+of the file is consistent. The first form requires a path (including the
+filename with extension), the second can be used for checking uploads by 
+passing the file index. It returns <code>true, is_consistent</code> on success or
+<code>false, errormsg</code> in case of an error. <code>is_consistent</code> is true if the
+mimetype corresponds to the file extension.</p>
 <h3 id="serverrequireauth">server.requireAuth</h3>
 <pre><code>success, table = server.requireAuth()
 </code></pre>
@@ -1465,13 +1501,16 @@ else
 end
 </code></pre>
 <h3 id="servercopytmpfile">server.copyTmpfile</h3>
-<pre><code>success, errormsg = server.copyTmpfile()
+<pre><code>success, errormsg = server.copyTmpfile(from, to)
 </code></pre>
 <p>Sipi saves each uploaded file in a temporary location (given by the
 config variable <code>tmpdir</code>) and deletes it after the request has been
 served. This function is used to copy the file to another location where
 it can be retrieved later. Returns <code>true, nil</code> on success or
 <code>false, errormsg</code> on failure.</p>
+<p>Parameters:
+- <code>from</code>:    an index (integer value) of array server.uploads.
+- <code>target</code>:  an absolute path</p>
 <h3 id="serversystime">server.systime</h3>
 <pre><code>systime = server.systime()
 </code></pre>
@@ -1729,7 +1768,7 @@ end
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../running/" title="Running" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../sipi/" title="Basic information and Reference" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -1738,19 +1777,19 @@ end
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Running
+                Basic information and Reference
               </span>
             </div>
           </a>
         
         
-          <a href="../developing/" title="Developing" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../building/" title="Building" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Developing
+                Building
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

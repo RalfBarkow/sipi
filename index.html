@@ -94,7 +94,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="." title="SIPI Documentation" class="md-header-nav__button md-logo">
+        <a href="0-release-notes/" title="SIPI Documentation" class="md-header-nav__button md-logo">
           
             <img src="assets/images/dasch-icon-white.svg" width="24" height="24">
           
@@ -164,7 +164,7 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="." title="SIPI Documentation" class="md-nav__button md-logo">
+    <a href="0-release-notes/" title="SIPI Documentation" class="md-nav__button md-logo">
       
         <img src="assets/images/dasch-icon-white.svg" width="48" height="48">
       
@@ -178,20 +178,35 @@
       
       
 
-  
 
+  <li class="md-nav__item">
+    <a href="introduction/" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
 
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
       
-    
-    
-    <a href="." title="Overview" class="md-nav__link md-nav__link--active">
-      Overview
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="sipi/" title="Basic information and Reference" class="md-nav__link">
+      Basic information and Reference
     </a>
+  </li>
+
     
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="lua/" title="Lua" class="md-nav__link">
+      Lua
+    </a>
   </li>
 
     
@@ -215,18 +230,6 @@
   <li class="md-nav__item">
     <a href="running/" title="Running" class="md-nav__link">
       Running
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="lua/" title="Lua" class="md-nav__link">
-      Lua
     </a>
   </li>
 
@@ -284,8 +287,8 @@
                 
                 
                 <h1 id="overview">Overview</h1>
-<p>Sipi is a high-performance, IIIF compatible media server developed by
-the <a href="http://www.dhlab.unibas.ch">Digital Humanities Lab</a> at the
+<p>Sipi is a multihreaded, high-performance, IIIF compatible media server developed by
+the <a href="https://dasch.swiss">Data and Service Center for the Humanities</a> at the
 <a href="https://www.unibas.ch/en.html">University of Basel</a>. It is designed to
 be used by archives, libraries, and other institutions that need to
 preserve high-quality images while making them available online.</p>
@@ -309,28 +312,25 @@ serve most common file types. In addition Lua scripts and embedded Lua
 (i.e., Lua embedded into HTML pages using the tags
 &lt;lua&gt;…&lt;/lua&gt; are supported.</p>
 <p>Sipi can also be used from the command line to convert images to/from
-TIFF_, <a href="https://jpeg.org/jpeg2000/">JPEG 2000</a>, JPEG_ and PNG_
+TIFF-, <a href="https://jpeg.org/jpeg2000/">JPEG 2000</a>, JPEG- and PNG-
 formats. For all these conversion, Sipi tries to preserve all embedded
 metadata such as
-<a href="https://iptc.org/standards/photo-metadata/iptc-standard/">IPTC</a>,
-<a href="http://www.exif.org">EXIF</a>,
-<a href="http://www.adobe.com/products/xmp.html">XMP</a> and
-<a href="https://en.wikipedia.org/wiki/ICC_profile">ICC</a> color profiles.
+- <a href="https://iptc.org/standards/photo-metadata/iptc-standard/">IPTC</a>
+- <a href="http://www.exif.org">EXIF</a>
+- <a href="http://www.adobe.com/products/xmp.html">XMP</a>
+- <a href="https://en.wikipedia.org/wiki/ICC_profile">ICC</a> color profiles.
 However, due to the limitations of some file formats, it cannot be
-guaranteed that all metadata and ICC profiles are preserved. <a href="https://jpeg.org/jpeg2000/">JPEG
-2000</a> does not allow all types of
-<a href="https://en.wikipedia.org/wiki/ICC_profile">ICC</a> profiles. Unsupported
-profile types will be added to the <a href="https://jpeg.org/jpeg2000/">JPEG
-2000</a> header as comment and will be
-reinstated if the <a href="https://jpeg.org/jpeg2000/">JPEG 2000</a> file is
-converted back to the TIFF_ format.</p>
+guaranteed that all metadata and ICC profiles are preserved.
+- <a href="https://jpeg.org/jpeg2000/">JPEG2000</a> (J2k) does not allow all types of ICC profiles
+  profiles. Unsupported profile types will be added to the J2k header as comment and will be
+reinstated if the J2k file is converted back to the TIFF-format.</p>
 <p>Sipi is <a href="http://www.gnu.org/philosophy/free-sw.en.html">free software</a>,
 released under the <a href="http://www.gnu.org/licenses/agpl-3.0.en.html">GNU Affero General Public
 License</a>. It is written in
-C++ and runs on Linux (including <a href="https://www.debian.org/">Debian</a>,
-<a href="https://www.ubuntu.com/">Ubuntu</a>, and
-<a href="https://www.centos.org/">CentOS</a>) and Mac OS X.</p>
-<p>Freely distributable binary releases are available.</p>
+C++ and runs on Linux and Mac OS X. Note: In order to compile SIPI, the user has
+to provide a licensed source of the <a href="https://kakadusoftware.com">kakadu software</a>.</p>
+<p>Freely distributable binary releases are available
+<a href="https://hub.docker.com/r/daschswiss/sipi">daschswiss/sipi</a> as docker image.</p>
                 
                   
                 
@@ -347,27 +347,6 @@ C++ and runs on Linux (including <a href="https://www.debian.org/">Debian</a>,
       
         
 <footer class="md-footer">
-  
-    <div class="md-footer-nav">
-      <nav class="md-footer-nav__inner md-grid">
-        
-        
-          <a href="building/" title="Building" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
-            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
-              <span class="md-flex__ellipsis">
-                <span class="md-footer-nav__direction">
-                  Next
-                </span>
-                Building
-              </span>
-            </div>
-            <div class="md-flex__cell md-flex__cell--shrink">
-              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
-            </div>
-          </a>
-        
-      </nav>
-    </div>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
