@@ -242,6 +242,19 @@
     Authentication and Authorization
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iiif-auth-api" class="md-nav__link">
+    IIIF Auth API
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -723,6 +736,19 @@
     Authentication and Authorization
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iiif-auth-api" class="md-nav__link">
+    IIIF Auth API
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1168,20 +1194,53 @@ an image is requested.</p>
 Note that Lua function's return value may consist of more than one
 element (see <a href="http://www.lua.org/pil/5.1.html">Multiple Results</a>):</p>
 <ul>
-<li>Grant full permissions to access the file identified by <code>filepath</code>:
-    <code>return 'allow', filepath</code></li>
+<li>
+<p>Grant full permissions to access the file identified by <code>filepath</code>:
+  <code>lua
+  return 'allow', filepath</code></p>
+</li>
 <li>
 <p>Grant restricted access to the file identified by <code>filepath</code>, in one of the following ways:</p>
-<p>:   -   Reduce the image dimensions, e.g. to the default thumbnail
-        dimensions:
-        <code>return 'restrict:size=' .. "config.thumb_size", filepath</code>
-    -   Render the image with a watermark:
-        <code>return restrict:watermark=&lt;path-to-watermark&gt;, filepath</code></p>
+</li>
+<li>Reduce the image dimensions, e.g. to the default thumbnail dimensions:
+    <code>lua
+        return 'restrict:size=' .. "config.thumb_size", filepath</code></li>
+<li>
+<p>Render the image with a watermark:
+    <code>lua
+        return restrict:watermark=&lt;path-to-watermark&gt;, filepath</code></p>
 </li>
 <li>
-<p>Deny access to the requested file: <code>return 'deny'</code></p>
+<p>Deny access to the requested file:
+  <code>return 'deny'</code></p>
 </li>
 </ul>
+<h3 id="iiif-auth-api">IIIF Auth API</h3>
+<p>The pre_flight is also responsible for activating the IIIF Auth API. In order to do so, the pre_flight script returns
+a table that contains all necessary information. The following fields have to be returned:
+- <code>type</code>: String giving the type. Valis are <code>"login"</code>, <code>"clickthrough"</code>, <code>""kiosk"</code> or <code>"external"</code>.
+- <code>cookieUrl</code>: URL where to get a valid IIIF Auth cookie for this service.
+- <code>tokenUrl</code>: URL where to get a valid IIIF Auth token for this service.
+- <code>confirmLabel</code>: Label to display in confirmation box.
+- <code>description</code>: Description for login window.
+- <code>failureDescription</code>: Information, if login fails.
+- <code>failureHeader</code>: Header for failure window.
+- <code>header</code>: Header of login window
+- <code>label</code>: Label of the login window
+In addition, the filepath has to be returns. A full response may look as follows:</p>
+<pre><code class="lua">return {
+   type = 'login',
+    cookieUrl = 'https://localhost/iiif-cookie.html',
+    tokenUrl = 'https://localhost/iiif-token.php',
+    confirmLabel =  'Login to SIPI',
+    description = 'This Example requires a demo login!',
+    failureDescription = '&lt;a href=&quot;http://example.org/policy&quot;&gt;Access Policy&lt;/a&gt;',
+    failureHeader = 'Authentication Failed',
+    header = 'Please Log In',
+    label = 'Login to SIPI',
+}, filepath
+</code></pre>
+
 <p>In the <code>pre_flight</code> function, permission checking can be implemented.
 When Sipi is used with <a href="http://www.knora.org/">Knora</a>, the <code>pre_flight</code>
 function asks Knora about the user's permissions on the image (see
