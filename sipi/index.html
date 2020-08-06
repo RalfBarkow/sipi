@@ -311,6 +311,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#configuration-of-administrator-access" class="md-nav__link">
+    Configuration of Administrator Access
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#routing-table" class="md-nav__link">
     Routing Table
   </a>
@@ -344,8 +351,20 @@
 
 
   <li class="md-nav__item">
-    <a href="../lua/" title="Lua" class="md-nav__link">
-      Lua
+    <a href="../lua/" title="Lua integration" class="md-nav__link">
+      Lua integration
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../lua-image/" title="Lua imaging functions" class="md-nav__link">
+      Lua imaging functions
     </a>
   </li>
 
@@ -511,6 +530,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#configuration-of-administrator-access" class="md-nav__link">
+    Configuration of Administrator Access
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#routing-table" class="md-nav__link">
     Routing Table
   </a>
@@ -670,7 +696,7 @@ by <code>command line options</code></em>.</p>
 configuration file). The following configuration parameters are in the <code>sipi</code>-table of the configuration script:</p>
 <ul>
 <li>
-<p><code>imgroot=path</code>: This is the top-directory of the media file repository. SIPI should at least have read access to it. If
+<p><a name="imgroot"></a><code>imgroot=path</code>: This is the top-directory of the media file repository. SIPI should at least have read access to it. If
   SIPI is used to upload and convert files, it must also have write access. The path may be given as absolute path or
   as relative path.<br />
 <em>Cmdline option: <code>--imgroot</code></em><br />
@@ -678,7 +704,7 @@ configuration file). The following configuration parameters are in the <code>sip
 <em>Default: <code>./images</code></em></p>
 </li>
 <li>
-<p><code>initscript=path/to/init.lua</code>: SIPI needs a minmal set of LUA functions that can be adapted to the local installation.
+<p><a name="scriptinit"></a><code>initscript=path/to/init.lua</code>: SIPI needs a minmal set of LUA functions that can be adapted to the local installation.
   These mandatory functions are definied in a init-script (usually it can be found in the config directory where also
   the configuration file is located).<br />
 <em>Cmdline option: <code>--initscript</code></em><br />
@@ -686,20 +712,20 @@ configuration file). The following configuration parameters are in the <code>sip
 <em>Default: <code>./config/sipi.init.lua</code></em></p>
 </li>
 <li>
-<p><code>tmpdir=path</code>: For the support of multipart POST SIPI requires read/write access to a directory to save temporary
+<p><a name="tmpdir"></a><code>tmpdir=path</code>: For the support of multipart POST SIPI requires read/write access to a directory to save temporary
   files.<br />
 <em>Cmdline option: <code>--tmpdir</code></em><br />
 <em>Environment variable: <code>SIPI_IMGROOT</code></em><br />
 <em>Default: <code>./tmp</code></em></p>
 </li>
 <li>
-<p><code>scriptdir=path</code>: Path to the directory where the LUA-scripts for the routes (e.g. RESTful services) can be found.<br />
+<p><a name="scriptdir"></a><code>scriptdir=path</code>: Path to the directory where the LUA-scripts for the routes (e.g. RESTful services) can be found.<br />
 <em>Cmdline option: <code>--scriptdir</code></em><br />
 <em>Environment variable: <code>SIPI_SCRIPTDIR</code></em><br />
 <em>Default: <code>./scripts</code></em></p>
 </li>
 <li>
-<p><code>cachedir=path</code>: SIPI may optionally use a cache directory to store converted image in order to avoid computationally
+<p><a name="cachedir"></a><code>cachedir=path</code>: SIPI may optionally use a cache directory to store converted image in order to avoid computationally
   intensive conversions if a specific variant is requested several times. Sipi starts with a warning if the cache
   directory is defined but not existing.<br />
 <em>Cmdline option: <code>--cachedir</code></em><br />
@@ -710,7 +736,7 @@ configuration file). The following configuration parameters are in the <code>sip
 <p>In addition, SIPI can act as a webserver that offers image upload and conversion as web service. In order to use this
 feature, a server directory has to be defined. This definition ist in the <code>fileserver</code>-table of the configuration file:</p>
 <ul>
-<li><code>docroot=path</code>: Path to the document root of the SIPI web server.<br />
+<li><a name="docroot"></a><code>docroot=path</code>: Path to the document root of the SIPI web server.<br />
 <em>Cmdline option: <code>--docroot</code></em><br />
 <em>Environment variable: <code>SIPI_DOCROOT</code></em><br />
 <em>Default: <code>./server</code></em></li>
@@ -719,82 +745,108 @@ feature, a server directory has to be defined. This definition ist in the <code>
 <p>The following configuration parameters are used by the SIPI server:</p>
 <ul>
 <li>
-<p><code>hostname=dns-name</code>: The DNS name that SIPI shall show to the outside world.<br />
-<em>Cmdline option: <code>--hostname</code></em><br />
+<p><a name="hostname"></a><code>hostname=dns-name</code>: The DNS name that SIPI shall show to the outside world. It should be
+  the dns name the client uses to access the SIPI server (and not internal hostnames by proxies etc.). 
+  <em>Cmdline option: <code>--hostname</code></em><br />
 <em>Environment variable: <code>SIPI_HOSTNAME</code></em><br />
 <em>Default: <code>localhost</code></em></p>
 </li>
 <li>
-<p><code>port=portnum</code>: Portnumber SIPI should listen on for incoming HTTP requests.<br />
+<p><a name="portnum"></a><code>port=portnum</code>: Portnumber SIPI should listen on for incoming HTTP requests.<br />
 <em>Cmdline option: <code>--serverport</code></em><br />
 <em>Environment variable: <code>SIPI_SERVERPORT</code></em><br />
 <em>Default: <code>80</code></em></p>
 </li>
 <li>
-<p><code>ssl_port=postnum</code>: Portnumber SIPI should listen on for incoming SHTTP requests (using SSL).<br />
+<p><a name="sslport"></a><code>ssl_port=portnum</code>: Portnumber SIPI should listen on for incoming SHTTP requests (using SSL).<br />
 <em>Cmdline option: <code>--sslport</code></em><br />
 <em>Environment variable: <code>SIPI_SSLPORT</code></em><br />
 <em>Default: <code>443</code></em></p>
 </li>
 <li>
-<p><code>nthreads=num</code>: Number of worker threads that SIPI allocates. SIPI is a mutlithreaded server and pre-allocates a
+<p><a name="nthreads"></a><code>nthreads=num</code>: Number of worker threads that SIPI allocates. SIPI is a mutlithreaded server and pre-allocates a
   given number of working threads that can be configured.<br />
 <em>Cmdline option: <code>--nthreads</code></em><br />
 <em>Environment variable: <code>SIPI_NTHREADS</code></em><br />
 <em>Default: number of hardware cores as given by <code>std::thread::hardware_concurrency()</code></em></p>
 </li>
 <li>
-<p><code>prefix_as_path=bool</code>: If <code>true</code>, the prefix is used as path within the image root directory. If false, the prefix
+<p><a name="prefixaspath"></a><code>prefix_as_path=bool</code>: If <code>true</code>, the prefix is used as path within the image root directory. If false, the prefix
   is ignored and it is assumed that all images are directly located in the image root.<br />
 <em>Cmdline option: <code>--pathprefix</code></em><br />
 <em>Environment variable: <code>SIPI_PATHPREFIX</code></em><br />
 <em>Default: <code>false</code></em></p>
 </li>
 <li>
-<p><code>ssl_certificate=path</code>: Path to the SSL certificate. Is mandatory if SSL is to be used.<br />
+<p><a name="sslcertificate"></a><code>ssl_certificate=path</code>: Path to the SSL certificate. Is mandatory if SSL is to be used.<br />
 <em>Cmdline option: <code>--sslcert</code></em><br />
 <em>Environment variable: <code>SIPI_SSLCERTIFICATE</code></em><br />
 <em>Default: <code>./certificate/certificate.pem</code></em></p>
 </li>
 <li>
-<p><code>ssl_key=path</code>: Path to the SSL key file. Is mandatory if SSL is to be used.<br />
+<p><a name="sslkey"><code>ssl_key=path</code>: Path to the SSL key file. Is mandatory if SSL is to be used.<br />
 <em>Cmdline option: <code>--sslkey</code></em><br />
 <em>Environment variable: <code>SIPI_SSLKEY</code></em><br />
 <em>Default: <code>./certificate/key.pem</code></em></p>
 </li>
 <li>
-<p><code>jwt_secret=string</code>: Shared secret to encode web tokens.<br />
+<p><a name="jwt-secret"></a><code>jwt_secret=string</code>: Shared secret to encode web tokens.<br />
 <em>Cmdline option: <code>--jwtkey</code></em><br />
 <em>Environment variable: <code>SIPI_JWTKEY</code></em><br />
 <em>Default: <code>UP 4888, nice 4-8-4 steam engine</code></em></p>
 </li>
 <li>
-<p><code>max_post_size=amount</code>: Maximal size a file upoad may have. The amount has the form "XYZM" with M indication Megabytes.<br />
+<p><a name="maxpostsize"></a><code>max_post_size=amount</code>: Maximal size a file upload may have. The amount has the
+  form "<number><type>" where <code>number</code> is an integer value and <code>type</code>an "M" for Megabytes, "G" for Gigabytes
+  and "" (empty) for bytes.<br />
 <em>Cmdline option: <code>--maxpost</code></em><br />
 <em>Environment variable: <code>SIPI_MAXPOSTSIZE</code></em><br />
 <em>Default: <code>300M</code></em></p>
 </li>
 <li>
-<p><code>jpeg_quality=num</code>: Compression parameter when producing JPEG output. Must be a number between 1 and 100.<br />
+<p><a name="keepalive"></a><code>keep_alive</code> : Number of seconds a connection (socket) remains open at maximum ("keep-alive"),
+  if a client requests a "keep-alive" connection in the request header. For more information see
+  <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Keep-Alive">Keep-Alive</a>.<br />
+<em>Cmdline option: <code>--keepalive</code></em><br />
+<em>Environment variable: <code>SIPI_KEEPALIVE</code></em><br />
+<em>Default: <code>5</code></em></p>
+</li>
+<li>
+<p><a name="jpegquality"><code>jpeg_quality=num</code>: Compression parameter when producing JPEG output. Must be a number
+  between 1 and 100. Unfortunately, the IIIF Image API does not allow to give a JPEG quality (=compression) on the IIIF URL. SIPI
+  allows to configure the compression quality system wide with this parameter. Allowed values are in he range
+  [1..100] where 1 the worst quality (and highest compression factor = smallest file size) and 100 the highest
+  quality (with lowest compression factor = biggest file size). Please note that SIPI is not able to provide
+  lossless compression for JPEG files.<br />
 <em>Cmdline option: <code>--quality</code></em><br />
 <em>Environment variable: <code>SIPI_JPEGQUALITY</code></em><br />
 <em>Default: <code>60</code></em></p>
 </li>
 <li>
-<p><code>thumb_size=string</code>: Default size for thumbnails. Parameter must be IIIF conformant size string.<br />
+<p><a name="thumbsize"></a><code>thumb_size=string</code>: Default size for thumbnails. Parameter must be IIIF conformant size string. This configuration
+  parameter can be used to define a default value for creating thumbnails. It has no direct implications but can be
+  used in LUA scripts (e.g. the pre_flight-function).<br />
 <em>Cmdline option: <code>--thumbsize</code></em><br />
 <em>Environment variable: <code>SIPI_THUMBSIZE</code></em><br />
 <em>Default: <code>!128,128</code></em></p>
 </li>
 <li>
-<p><code>loglevel=level</code>: SIPI uses syslog as logging facility. The logging name is <code>Sipi</code>. It supports the following levels:
+<p><a name="logfile"></a><code>logfile=path</code>: SIPI uses <a href="https://en.wikipedia.org/wiki/Syslog">syslog</a> as logging facility. The logging name
+  is <code>Sipi</code>. It supports the following levels:
+  "EMERGENCY", "ALERT", "CRITICAL", "ERROR", "WARNING", "NOTICE", "INFORMATIONAL", "DEBUG".<br />
+<em>Cmdline option: <code>--logfile</code></em><br />
+<em>Environment variable: <code>SIPI_LOGFILE</code></em><br />
+<em>Default: <code>Sipi</code></em></p>
+</li>
+<li>
+<p><a name="loglevel"></a><code>loglevel=level</code>: SIPI uses syslog as logging facility. The logging name is <code>Sipi</code>. It supports the following levels:
   "EMERGENCY", "ALERT", "CRITICAL", "ERROR", "WARNING", "NOTICE", "INFORMATIONAL", "DEBUG".<br />
 <em>Cmdline option: <code>--loglevel</code></em><br />
 <em>Environment variable: <code>SIPI_LOGLEVEL</code></em><br />
 <em>Default: <code>DEBUG</code></em></p>
 </li>
 <li>
-<p><code>max_temp_file_age=num</code>: The maximum allowed age of temporary files (in seconds) before they are deleted.<br />
+<p><a name="maxtmpfileage"></a><code>max_temp_file_age=num</code>: The maximum allowed age of temporary files (in seconds) before they are deleted.<br />
 <em>Cmdline option: <code>--maxtmpage</code></em><br />
 <em>Environment variable: <code>SIPI_MAXTMPAGE</code></em><br />
 <em>Default: <code>86400</code></em> (one day)</p>
@@ -811,7 +863,7 @@ client).</p>
 <p>The following configuration parameters determine the behaviour of the cache:</p>
 <ul>
 <li>
-<p><code>cachedir=path</code>: SIPI may optionally use a cache directory to store converted image in order to avoid computationally
+<p><a name="cachedir"></a><code>cachedir=path</code>: SIPI may optionally use a cache directory to store converted image in order to avoid computationally
   intensive conversions if a specific variant is requested several times. Sipi starts with a warning if the cache
   directory is defined but not existing.<br />
 <em>Cmdline option: <code>--cachedir</code></em><br />
@@ -819,21 +871,21 @@ client).</p>
 <em>Default: <code>./cache</code></em></p>
 </li>
 <li>
-<p><code>cachesize=amount</code>: The maximal size of the cache. The cache will be purged if either the maximal size or maximal
+<p><a name="cachesize"></a><code>cachesize=amount</code>: The maximal size of the cache. The cache will be purged if either the maximal size or maximal
   number of files is reached. The amount has the form "<number>M" with M indication Megabytes.<br />
 <em>Cmdline option: <code>--cachesize</code></em><br />
 <em>Environment variable: <code>SIPI_CACHESIZE</code></em><br />
 <em>Default: <code>200M</code></em></p>
 </li>
 <li>
-<p><code>cache_nfiles=num</code>: The maximal number of files to be cached. The cache will be purged if either the maximal size
+<p><a name="cachenfiles"></a><code>cache_nfiles=num</code>: The maximal number of files to be cached. The cache will be purged if either the maximal size
    or maximal number of files is reached.<br />
 <em>Cmdline option: <code>--cachenfiles</code></em><br />
 <em>Environment variable: <code>SIPI_CACHENFILES</code></em><br />
 <em>Default: <code>200</code></em></p>
 </li>
 <li>
-<p><code>cache_hysteresis=float</code>: If the cache becomes full, the given percentage of file space is marked for reuse and purged.<br />
+<p><a name="hysteresis"></a><code>cache_hysteresis=float</code>: If the cache becomes full, the given percentage of file space is marked for reuse and purged.<br />
 <em>Cmdline option: <code>--cachehysteresis</code></em><br />
 <em>Environment variable: <code>SIPI_CACHEHYSTERESIS</code></em><br />
 <em>Default: <code>0.15</code></em></p>
@@ -853,12 +905,29 @@ data stream for the client.</p>
 </li>
 <li>
 <p><code>wwwroute=string</code>: Route for the file server should respond to requests.That is, a file with the name "dada.html"
-  is accessed with <code>htp://dnsname/server/data.html</code>, if the <code>wwwroute</code>is set to <code>/server</code>.<br />
+  is accessed with <code>http://dnsname/server/dada.html</code>, if the <code>wwwroute</code>is set to <code>/server</code>.<br />
 <em>Cmdline option: <code>--wwwroute</code></em><br />
 <em>Environment variable: <code>SIPI_WWWROUTE</code></em><br />
 <em>Default: <code>/server</code></em></p>
 </li>
 </ul>
+<h4 id="configuration-of-administrator-access">Configuration of Administrator Access</h4>
+<p>SIPI allows special administrator access for some tasks. In order to allow for this, an administrator has to be defined
+as follows:</p>
+<pre><code class="lua">admin = {
+    --
+    -- username of admin user
+    --
+    user = 'admin',
+
+    --
+    -- Administration password
+    --
+    password = 'Sipi-Admin'
+}
+</code></pre>
+
+<p>If You're using the administrator user, please make sure that the config file is not exposed!</p>
 <h4 id="routing-table">Routing Table</h4>
 <p>SIPI allows to implement RESTful interfaces or other services based on LUA-scripts which are located in the scripts
 directory. In order to use these LUA-scripts as endpoints, the appropriate routes have to be defined in the
@@ -925,13 +994,13 @@ directory. In order to use these LUA-scripts as endpoints, the appropriate route
           </a>
         
         
-          <a href="../lua/" title="Lua" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../lua/" title="Lua integration" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Lua
+                Lua integration
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
